@@ -50,13 +50,23 @@ class ForgetDbService
     }
 
     /**
+     * Returns an array of tables ready for processing.
+     *
+     * @return array
+     */
+    public function getTables(): array
+    {
+        return $this->tables;
+    }
+
+    /**
      * @param Command $messenger
      */
     public function forget(Command $messenger): void
     {
         $this->messenger = $messenger;
 
-        foreach ($this->tables as $table) {
+        foreach ($this->getTables() as $table) {
             $table->forget($this->messenger);
         }
     }

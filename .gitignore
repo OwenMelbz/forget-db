@@ -2,6 +2,6 @@
 /.idea
 /.vscode
 /.vagrant
-/database/database.sqlite
+database.sqlite
 forgetdb.yml
 .env

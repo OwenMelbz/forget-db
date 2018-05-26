@@ -70,6 +70,16 @@ class Table
     }
 
     /**
+     * Allows us to set the messenger.
+     *
+     * @param Command $messenger
+     */
+    public function setMessenger(Command $messenger): void
+    {
+        $this->messenger = $messenger;
+    }
+
+    /**
      * This is the main function which processes everything.
      *
      * @param Command $messenger
@@ -77,7 +87,7 @@ class Table
      */
     public function forget(Command $messenger): void
     {
-        $this->messenger = $messenger;
+        $this->setMessenger($messenger);
 
         $this->writeRowsToDatabase(
             $this->cleanseRows(
@@ -176,7 +186,7 @@ class Table
      *
      * @return Collection
      */
-    private function getRows(): Collection
+    public function getRows(): Collection
     {
         $query = DB::table($this->name);
 

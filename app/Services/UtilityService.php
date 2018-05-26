@@ -55,7 +55,7 @@ class UtilityService
             mkdir($folder, 0755, true);
         }
 
-        return realpath($fullPath);
+        return realpath($folder);
     }
 
     /**
@@ -69,7 +69,9 @@ class UtilityService
     {
         $filenameInfo = pathinfo($filename);
 
-        return data_get($filenameInfo, 'filename') . '.yml'; // .yaml or .yml?
+        return str_slug(
+            data_get($filenameInfo, 'filename')
+        ). '.yml'; // .yaml or .yml?
     }
 
     /**
@@ -96,10 +98,10 @@ class UtilityService
     {
         $config = [
             'table_one' => [
-                'key' => 'id',
+                'key' => 'user_id',
                 'conditions' => [
                     'where user_id != 1',
-                    'or cake LIKE "%test%"',
+                    'or user_email LIKE "%@%"',
                 ],
                 'columns' => [
                     'user_name' => 'name',
@@ -107,14 +109,14 @@ class UtilityService
                 ],
             ],
             'table_two' => [
-                'key' => 'id',
+                'key' => 'user_id',
                 'columns' => [
                     'user_name' => 'name',
                     'user_email' => 'email',
                 ],
             ],
             'table_three' => [
-                'key' => 'id',
+                'key' => 'user_id',
                 'conditions' => 'user_id = 1',
                 'columns' => [
                     'user_name' => 'name',
