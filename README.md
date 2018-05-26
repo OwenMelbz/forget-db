@@ -11,14 +11,6 @@ It uses a simple yaml configuration file to define the conditions for overwritin
 I would recommend installing this globally on your system with
 
 ```sh
-composer global require owenmelbz/forget-db
-```
-
-This should allow you to run `forget-db` from anywhere on your system, I would not recommend installing it into an existing project directory as it will cause composer dependency conflicts.
-
-If it conflicts, or just doesn't work you can try installing it more manually, e.g
-
-```sh
 curl -L https://github.com/OwenMelbz/forget-db/raw/master/builds/application --output forget-db
 chmod +x forget-db
 mv ./forget-db /usr/local/bin/forget-db

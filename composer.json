@@ -46,6 +46,9 @@
     "scripts": {
         "post-create-project-cmd": [
             "@php application app:rename"
+        ],
+        "build": [
+            "php forget-db app:build"
         ]
     },
     "minimum-stability": "dev",
