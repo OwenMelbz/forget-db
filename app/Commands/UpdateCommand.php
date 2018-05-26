@@ -61,6 +61,7 @@ class UpdateCommand extends Command
 
         $this->line('');
         $this->warn('🎉⭐🍕⚡🎉⭐🍕⚡🎉 UPDATED TO ' . $newVersion . ' ⭐🍕⚡🎉⭐🍕⚡🎉⭐🍕⚡');
+        exit;
     }
 
     /**
