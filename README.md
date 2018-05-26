@@ -62,7 +62,7 @@ The last property is `columns` this is simply an array of column names, with the
 
 # Usage
 
-Once you have your config complete you can run `forget-db ./path/to/config.yml` the wizard will ask for your connection details, and then will start the cleanse.
+Once you have your config complete you can run `forget-db forget ./path/to/config.yml` the wizard will ask for your connection details, and then will start the cleanse.
 
 After its completed you should get a notification to let you know!
 
