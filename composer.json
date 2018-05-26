@@ -1,18 +1,18 @@
 {
-    "name": "laravel-zero/laravel-zero",
-    "description": "The Laravel Zero Framework.",
-    "keywords": ["framework", "laravel", "laravel zero", "console", "cli"],
-    "homepage": "https://laravel-zero.com",
+    "name": "owenmelbz/forget-db",
+    "description": "A simple GDPR inspired tool to anonymise confidential database data.",
+    "keywords": ["laravel", "database", "cli", "gdpr"],
+    "homepage": "https://github.com/OwenMelbz/forget-db",
     "type": "project",
     "license": "MIT",
     "support": {
-        "issues": "https://github.com/laravel-zero/laravel-zero/issues",
-        "source": "https://github.com/laravel-zero/laravel-zero"
+        "issues": "https://github.com/OwenMelbz/forget-db/issues",
+        "source": "https://github.com/OwenMelbz/forget-db"
     },
     "authors": [
         {
-            "name": "Nuno Maduro",
-            "email": "enunomaduro@gmail.com"
+            "name": "Owen Melbourne",
+            "email": "owenmelbz@gmail.com"
         }
     ],
     "require": {
