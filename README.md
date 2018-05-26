@@ -16,6 +16,7 @@ I would recommend installing this globally on your system with
 curl -L https://github.com/OwenMelbz/forget-db/raw/master/builds/application --output forget-db
 chmod +x forget-db
 mv ./forget-db /usr/local/bin/forget-db
+forget-db update # optional - but will make sure your binary is up to date
 ```
 
 # Configuration

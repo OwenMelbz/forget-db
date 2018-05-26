@@ -2,15 +2,13 @@
 
 namespace Tests\Unit;
 
-use App\Commands\ForgetMeNowCommand;
-use App\Services\DatabaseService;
-use App\Services\ForgetDbService;
-use App\Services\UtilityService;
 use App\Table;
-use Illuminate\Support\Facades\DB;
-use Symfony\Component\Yaml\Yaml;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Artisan;
+use Symfony\Component\Yaml\Yaml;
+use App\Services\UtilityService;
+use App\Services\ForgetDbService;
+use App\Services\DatabaseService;
+use App\Commands\ForgetMeNowCommand;
 
 class TableTest extends TestCase
 {

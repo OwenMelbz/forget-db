@@ -4,7 +4,6 @@ namespace Tests\Unit;
 
 use App\Column;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Artisan;
 
 class ColumnTest extends TestCase
 {

@@ -88,7 +88,7 @@ class UpdateService
     {
         $fileUrl = data_get($update, 'download.browser_download_url');
 
-        $data = file_get_contents($fileUrl);
+        $data = @file_get_contents($fileUrl);
 
         $fileToOverWrite = $this->fileToOverWrite();
 
@@ -114,7 +114,7 @@ class UpdateService
      *
      * @return array
      */
-    private function getLatestRelease(): array
+    public function getLatestRelease(): array
     {
         return $this
             ->github
@@ -129,7 +129,7 @@ class UpdateService
      * @param int $releaseId
      * @return array
      */
-    private function getBuild(int $releaseId): array
+    public function getBuild(int $releaseId): array
     {
         $build = $this->github
             ->api('repo')
@@ -146,7 +146,7 @@ class UpdateService
      *
      * @return string
      */
-    private function fileToOverWrite(): string
+    public function fileToOverWrite(): string
     {
         if ($this->shouldUpdate()) {
             return Phar::running(false);

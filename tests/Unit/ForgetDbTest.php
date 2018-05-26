@@ -2,12 +2,12 @@
 
 namespace Tests\Unit;
 
-use App\Commands\ForgetMeNowCommand;
-use App\Services\DatabaseService;
-use App\Services\ForgetDbService;
+use Tests\TestCase;
 use App\Services\UtilityService;
 use Symfony\Component\Yaml\Yaml;
-use Tests\TestCase;
+use App\Services\ForgetDbService;
+use App\Services\DatabaseService;
+use App\Commands\ForgetMeNowCommand;
 
 class ForgetDbTest extends TestCase
 {

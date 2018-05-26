@@ -4,7 +4,6 @@ namespace Tests\Unit;
 
 use App\Condition;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Artisan;
 
 class ConditionTest extends TestCase
 {

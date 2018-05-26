@@ -2,11 +2,9 @@
 
 namespace Tests\Unit;
 
-use App\Services\UtilityService;
-use League\Flysystem\Util;
-use Symfony\Component\Yaml\Yaml;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Artisan;
+use Symfony\Component\Yaml\Yaml;
+use App\Services\UtilityService;
 
 class UtilityTest extends TestCase
 {
@@ -55,5 +53,15 @@ class UtilityTest extends TestCase
 
         $this->assertStringEndsWith('hello', $message);
         $this->assertContains('forget-db', $message);
+    }
+
+    public function test_i_can_use_the_ordinal_sort_of()
+    {
+        $this->assertEquals('1st', UtilityService::ordinal(1));
+        $this->assertEquals('2nd', UtilityService::ordinal(2));
+        $this->assertEquals('3rd', UtilityService::ordinal(3));
+        $this->assertEquals('4th', UtilityService::ordinal(4));
+        $this->assertEquals('101st', UtilityService::ordinal(101));
+        $this->assertEquals('200th', UtilityService::ordinal(200));
     }
 }

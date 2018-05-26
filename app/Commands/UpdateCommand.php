@@ -50,8 +50,13 @@ class UpdateCommand extends Command
         );
 
         try {
+            $downloadCount = UtilityService::ordinal(
+                (int) data_get($updateAvailable, 'download.download_count') + 1
+            );
+
             $this->message('Downloading... This might take a moment!');
-            $this->message('Fun fact whilst you wait, you are the ' . UtilityService::ordinal(data_get($updateAvailable, 'download.download_count')) . ' person to update.');
+            $this->message('Fun fact whilst you wait, you are the ' . $downloadCount . ' person to update.');
+
             $updater->updateTo($updateAvailable);
         } catch (Exception $e) {
             $this->notify('Whoops', 'Looks like something didn\'t go to plan...');
