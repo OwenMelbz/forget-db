@@ -8,7 +8,7 @@ class UtilityService
 {
     public static function cleansePath($path)
     {
-        $path = ltrim($path, './');
+        $path = str_replace('./', '', $path);
         $path = ltrim($path, '.');
 
         if (empty($path)) {
