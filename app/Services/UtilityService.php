@@ -49,39 +49,32 @@ class UtilityService
     public static function stubConfig()
     {
         $config = [
-            'table_one' =>
-                [
-                    'key' => 'id',
-                    'conditions' =>
-                        [
-                            0 => 'where user_id != 1',
-                            1 => 'or cake LIKE %test%',
-                        ],
-                    'columns' =>
-                        [
-                            'firstname' => 'firstname',
-                            'lastname' => 'lastname',
-                        ],
+            'table_one' => [
+                'key' => 'id',
+                'conditions' => [
+                    'where user_id != 1',
+                    'or cake LIKE "%test%"',
                 ],
-            'table_two' =>
-                [
-                    'key' => 'id',
-                    'columns' =>
-                        [
-                            'firstname' => 'firstname',
-                            'lastname' => 'lastname',
-                        ],
+                'columns' => [
+                    'user_name' => 'name',
+                    'user_email' => 'email',
                 ],
-            'table_three' =>
-                [
-                    'key' => 'id',
-                    'conditions' => 'where user_id = 1',
-                    'columns' =>
-                        [
-                            'firstname' => 'firstname',
-                            'lastname' => 'lastname',
-                        ],
+            ],
+            'table_two' => [
+                'key' => 'id',
+                'columns' => [
+                    'user_name' => 'name',
+                    'user_email' => 'email',
                 ],
+            ],
+            'table_three' => [
+                'key' => 'id',
+                'conditions' => 'user_id = 1',
+                'columns' => [
+                    'user_name' => 'name',
+                    'user_email' => 'email',
+                ],
+            ],
         ];
 
         return Yaml::dump($config);

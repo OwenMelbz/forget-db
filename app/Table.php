@@ -111,10 +111,18 @@ class Table
         );
 
         foreach ($this->conditions as $condition) {
-            $query->whereRaw(
-                $condition->getRaw()
-            );
+            if (str_contains($condition->getRaw(), 'or')) {
+                $query->orWhereRaw(
+                    $condition->getWhere()
+                );
+            } else {
+                $query->whereRaw(
+                    $condition->getWhere()
+                );
+            }
         }
+
+        dd($query->toSql());
 
         $results = $query->get();
 

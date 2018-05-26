@@ -17,11 +17,26 @@ class Condition
      */
     public function getRaw(): string
     {
-        $raw = ltrim($this->raw, 'where ');
-        $raw = ltrim($raw, 'WHERE ');
-        $raw = ltrim($raw, 'Where ');
+        return $this->raw;
+    }
 
-        return $raw;
+    public function getWhere(): string
+    {
+        $where = ltrim($this->raw, 'where ');
+        $where = ltrim($where, 'WHERE ');
+        $where = ltrim($where, 'Where ');
+
+        $where = ltrim($where, 'or ');
+        $where = ltrim($where, 'OR ');
+        $where = ltrim($where, 'Or ');
+        $where = ltrim($where, '|| ');
+
+        $where = ltrim($where, 'and ');
+        $where = ltrim($where, 'AND ');
+        $where = ltrim($where, 'And ');
+        $where = ltrim($where, '&& ');
+
+        return $where;
     }
 
 }
