@@ -6,3 +6,4 @@ database.sqlite
 forgetdb.yml
 .env
 *.phar
+application.backup

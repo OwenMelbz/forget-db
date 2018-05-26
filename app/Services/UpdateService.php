@@ -93,18 +93,18 @@ class UpdateService
         $fileToOverWrite = $this->fileToOverWrite();
 
         if (file_exists($fileToOverWrite)) {
-            rename($fileToOverWrite, 'bkup-' . $fileToOverWrite);
+            @rename($fileToOverWrite, $fileToOverWrite . '.backup');
         }
 
-        file_put_contents($fileToOverWrite, $data);
+        @file_put_contents($fileToOverWrite, $data);
 
-        chmod($fileToOverWrite, 0755);
+        @chmod($fileToOverWrite, 0755);
 
         if (file_exists($fileToOverWrite)) {
             return $fileToOverWrite;
         }
 
-        rename('bkup-' . $fileToOverWrite, $fileToOverWrite);
+        @rename($fileToOverWrite . '.backup', $fileToOverWrite);
 
         throw new Exception('Hmm could not download the file, looks like there are some permission issues, you can manually download the update from ' . $fileUrl);
     }
