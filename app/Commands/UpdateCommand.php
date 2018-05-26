@@ -55,15 +55,17 @@ class UpdateCommand extends Command
             );
 
             $this->message('Downloading... This might take a moment!');
-            $this->message('Fun fact whilst you wait, you are the ' . $downloadCount . ' person to update.');
+            $this->message('Fun fact whilst you wait, you are the ' . $downloadCount . ' person to update to this version.');
 
-            $updater->updateTo($updateAvailable);
+            $updatePath = $updater->updateTo($updateAvailable);
         } catch (Exception $e) {
             $this->notify('Whoops', 'Looks like something didn\'t go to plan...');
             $this->fail($e->getMessage());
             exit(0);
         }
 
+        $this->line('');
+        $this->line('If your happy the update was a success, feel free to delete the backup stored at ' . $updatePath . '.backup');
         $this->line('');
         $this->warn('🎉⭐🍕⚡🎉⭐🍕⚡🎉 UPDATED TO ' . $newVersion . ' ⭐🍕⚡🎉⭐🍕⚡🎉⭐🍕⚡');
         exit;
