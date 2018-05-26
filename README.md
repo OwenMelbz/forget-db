@@ -21,7 +21,7 @@ If it conflicts, or just doesn't work you can try installing it more manually, e
 ```sh
 curl -L https://github.com/OwenMelbz/forget-db/raw/master/builds/application --output forget-db
 chmod +x forget-db
-mv ./forgetdb /usr/local/bin/forget-db
+mv ./forget-db /usr/local/bin/forget-db
 ```
 
 # Configuration
