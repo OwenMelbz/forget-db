@@ -16,6 +16,14 @@ composer global require owenmelbz/forget-db
 
 This should allow you to run `forget-db` from anywhere on your system, I would not recommend installing it into an existing project directory as it will cause composer dependency conflicts.
 
+If it conflicts, or just doesn't work you can try installing it more manually, e.g
+
+```sh
+curl -L https://github.com/OwenMelbz/forget-db/raw/master/builds/application --output forget-db
+chmod +x forget-db
+mv ./forgetdb /usr/local/bin/forget-db
+```
+
 # Configuration
 
 To generate a new config just run (from anywhere) `forget-db new`
