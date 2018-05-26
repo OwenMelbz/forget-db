@@ -33,7 +33,7 @@ class ForgetMeNow extends Command
         $configPath = realpath($this->argument('config'));
 
         if (!$configPath || ($configPath && !file_exists($configPath))) {
-            $this->notify('Whoops', 'Looks like something didn\'t go to plan...', resource_path('icon.png'));
+            $this->notify('Whoops', 'Looks like something didn\'t go to plan...');
             $this->fail('Cannot find config at ' . $this->argument('config'));
             exit(0);
         }
@@ -41,7 +41,7 @@ class ForgetMeNow extends Command
         try {
             $config = UtilityService::parseConfig($configPath);
         } catch (\Exception $e) {
-            $this->notify('Whoops', 'Looks like something didn\'t go to plan...', resource_path('icon.png'));
+            $this->notify('Whoops', 'Looks like something didn\'t go to plan...');
             $this->fail($e->getMessage());
             exit(0);
         }
@@ -56,7 +56,7 @@ class ForgetMeNow extends Command
                     $this->getDatabaseConfig()
                 ))->testConnection();
             } catch (\Exception $e) {
-                $this->notify('Whoops', '🐳 Get the fail whale out...', resource_path('icon.png'));
+                $this->notify('Whoops', '🐳 Get the fail whale out...');
                 $this->fail($e->getMessage());
                 $this->line('');
                 $this->fail('😒 let\'s try again shall we?');
@@ -66,7 +66,7 @@ class ForgetMeNow extends Command
         $this->message('database connection established, we have lift off! 🚀');
 
         if (!$this->confirm('Are you ready to start? This is your last chance to bail 💦', !config('app.production'))) {
-            $this->notify('Whoops', 'Bailing! 💦💦💦', resource_path('icon.png'));
+            $this->notify('Whoops', 'Bailing! 💦💦💦');
             $this->fail('Bailing! 💦💦💦');
             exit(0);
         }
@@ -75,12 +75,12 @@ class ForgetMeNow extends Command
             $forgetdb = new ForgetDbService($config);
             $forgetdb->forget($this);
         } catch (\Exception $e) {
-            $this->notify('Whoops', 'Looks like something didn\'t go to plan...', resource_path('icon.png'));
+            $this->notify('Whoops', 'Looks like something didn\'t go to plan...');
             $this->fail($e->getMessage());
             exit(0);
         }
 
-        $this->notify('Who are you again?', 'We seem to have forgotten everything', resource_path('icon.png'));
+        $this->notify('Who are you again?', 'We seem to have forgotten everything');
         $this->line('');
         $this->warn('🎉⭐🍕⚡🎉⭐🍕⚡🎉 FINISHED ⭐🍕⚡🎉⭐🍕⚡🎉⭐🍕⚡');
     }
