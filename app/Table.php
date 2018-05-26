@@ -1,4 +1,4 @@
-<?php /** @noinspection PhpUnhandledExceptionInspection */
+<?php
 
 namespace App;
 
@@ -14,18 +14,48 @@ use LaravelZero\Framework\Commands\Command;
 class Table
 {
 
+    /**
+     * The name of the database table.
+     *
+     * @var string
+     */
     protected $name;
 
+    /**
+     * The primary key of the table to base
+     * the update query from.
+     *
+     * @var string
+     */
     protected $primaryKey;
 
+    /**
+     * A collection of App\Condition to
+     * store the query constraints.
+     *
+     * @var Collection
+     */
     protected $conditions;
 
+    /**
+     * A collection of App\Column to
+     * store the transformations.
+     *
+     * @var Collection
+     */
     protected $columns;
 
+    /**
+     * The LaravelZero\Framework\Commands\Command which
+     * acts as a message bus for output to the console.
+     *
+     * @var Command
+     */
     protected $messenger;
 
     /**
      * Table constructor.
+     *
      * @param string $name
      * @param string $primaryKey
      * @param Collection $conditions
@@ -40,10 +70,12 @@ class Table
     }
 
     /**
+     * This is the main function which processes everything.
+     *
      * @param Command $messenger
      * @throws Exception
      */
-    public function forget(Command $messenger)
+    public function forget(Command $messenger): void
     {
         $this->messenger = $messenger;
 
@@ -55,9 +87,13 @@ class Table
     }
 
     /**
+     * Here we take a Collection of transformed rows
+     * to insert back into the database based
+     * off of the primary key.
+     *
      * @param Collection $rows
      */
-    private function writeRowsToDatabase(Collection $rows)
+    private function writeRowsToDatabase(Collection $rows): void
     {
         $total = $rows->count();
 
@@ -67,7 +103,6 @@ class Table
                     ->where($this->primaryKey, $row->pk)
                     ->update($row->updates);
 
-                /** @noinspection PhpUndefinedMethodInspection */
                 $this->messenger->message(
                     sprintf('%d/%d %s written to database.', ($i + 1), $total, str_plural('row', $total))
                 );
@@ -76,11 +111,15 @@ class Table
     }
 
     /**
+     * Here we take the results of the database query
+     * and transform each of the columns into
+     * a faked version ready to update.
+     *
      * @param Collection $rows
      * @return Collection
      * @throws Exception
      */
-    private function cleanseRows(Collection $rows)
+    private function cleanseRows(Collection $rows): Collection
     {
         $total = $rows->count();
         $cleansedRows = collect();
@@ -96,14 +135,13 @@ class Table
 
             $pk = $row->{$this->primaryKey};
             $updates = (array) $row;
-            unset($updates[$this->primaryKey]);
+            unset($updates[$this->primaryKey]); // We don't want to update the primary key, so we remove it.
 
             $cleansedRows->push((object) [
                 'pk' => $pk,
                 'updates' => $updates,
             ]);
 
-            /** @noinspection PhpUndefinedMethodInspection */
             $this->messenger->message(
                 sprintf('%d/%d %s re-generated.', ($i + 1), $total, str_plural('row', $total))
             );
@@ -113,13 +151,12 @@ class Table
     }
 
     /**
+     * A helper function to get an array
+     * of the columns we want to transform.
+     *
      * @return Collection
      */
-
-    /**
-     * @return Collection
-     */
-    private function getColumnNames()
+    private function getColumnNames(): Collection
     {
         $names = collect();
 
@@ -133,21 +170,27 @@ class Table
     }
 
     /**
+     * Returns a Collection of items from the database query
+     * based off the conditions. It will only return the
+     * columns that have been defined in the config.
+     *
      * @return Collection
      */
-    private function getRows()
+    private function getRows(): Collection
     {
         $query = DB::table($this->name);
 
         $columnsToSelect = $this->getColumnNames();
         $columnsToSelect->prepend($this->primaryKey);
 
+        // To make life more manageable, we only select the columns that
+        // we're actually going to transform.
         $query->select(
             $columnsToSelect->toArray()
         );
 
         foreach ($this->conditions as $condition) {
-            if (str_contains($condition->getRaw(), 'or')) {
+            if (str_contains(strtolower($condition->getRaw()), 'or')) {
                 $query->orWhereRaw(
                     $condition->getWhere()
                 );
@@ -160,7 +203,6 @@ class Table
 
         $results = $query->get();
 
-        /** @noinspection PhpUndefinedMethodInspection */
         $this->messenger->message(
             sprintf('%d %s found to process.', $results->count(), str_plural('row', $results->count()))
         );

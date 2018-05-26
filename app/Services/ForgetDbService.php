@@ -15,30 +15,44 @@ use LaravelZero\Framework\Commands\Command;
 class ForgetDbService
 {
 
+    /**
+     * Stores the parsed config for access later.
+     *
+     * @var array
+     */
     protected $config;
 
-    protected $scheme;
-
+    /**
+     * The LaravelZero\Framework\Commands\Command which
+     * acts as a message bus for output to the console.
+     *
+     * @var Command
+     */
     protected $messenger;
 
+    /**
+     * Contains an array of App\Table ready for processing.
+     *
+     * @var array
+     */
     protected $tables;
 
     /**
      * ForgetDbService constructor.
+     *
      * @param array $config
      * @throws Exception
      */
     public function __construct(array $config)
     {
         $this->config = $config;
-        /** @noinspection PhpUnhandledExceptionInspection */
         $this->tables = $this->generateTablesFromConfig($config);
     }
 
     /**
      * @param Command $messenger
      */
-    public function forget(Command $messenger)
+    public function forget(Command $messenger): void
     {
         $this->messenger = $messenger;
 
@@ -48,11 +62,14 @@ class ForgetDbService
     }
 
     /**
+     * Here we convert the config into instances of individual
+     * classes before handing them off to be processed.
+     *
      * @param array $tables
      * @return array
      * @throws Exception
      */
-    private function generateTablesFromConfig(array $tables)
+    private function generateTablesFromConfig(array $tables): array
     {
         $scheme = [];
 
@@ -60,7 +77,6 @@ class ForgetDbService
             $tablePrimaryKey = data_get($properties, 'key', null);
 
             if (empty($tablePrimaryKey)) {
-                /** @noinspection PhpUnhandledExceptionInspection */
                 throw new Exception('No `key` property found for `' . $tableName . '` table');
             }
 
@@ -86,4 +102,5 @@ class ForgetDbService
 
         return $scheme;
     }
+
 }

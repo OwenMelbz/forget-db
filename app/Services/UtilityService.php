@@ -12,30 +12,41 @@ class UtilityService
 {
 
     /**
+     * This takes a path and tries to normalise it,
+     * things get a little crazy with bash style paths
+     * especially with the .phar version so this has
+     * to do some odd things. Please allow it!
+     *
      * @param $path
      * @return mixed|string
      */
-    public static function cleansePath($path)
+    public static function cleansePath($path): string
     {
         $path = str_replace('./', '', $path);
         $path = ltrim($path, '.');
 
+        // Looks like the user used a path like ./ etc,
+        // so we just that with the cwd.
         if (empty($path)) {
             $path = getcwd();
         }
 
-        $path = rtrim($path, '/');
+        $path = rtrim($path, '/'); // We'll put this back on later.
 
         return $path;
     }
 
     /**
+     * This takes a full path to a file and
+     * tries to create the folder for it if needed.
+     *
      * @param $fullPath
      * @return bool|string
      */
-    public static function createFolderForFile($fullPath)
+    public static function createFolderForFile($fullPath): string
     {
         $filenameInfo = pathinfo($fullPath);
+
         $folder = static::cleansePath(
             data_get($filenameInfo, 'dirname', './')
         );
@@ -48,29 +59,40 @@ class UtilityService
     }
 
     /**
+     * Tries to normalise the filename for the config,
+     * you know, just in case people include extensions etc.
+     *
      * @param $filename
      * @return string
      */
-    public static function cleanseFilename($filename)
+    public static function cleanseFilename($filename): string
     {
         $filenameInfo = pathinfo($filename);
 
-        return data_get($filenameInfo, 'filename') . '.yml';
+        return data_get($filenameInfo, 'filename') . '.yml'; // .yaml or .yml?
     }
 
     /**
+     * Takes a file path to a yaml file and
+     * tries to parse it into an array for processing.
+     *
      * @param $configPath
-     * @return mixed
+     * @return array
      */
-    public static function parseConfig($configPath)
+    public static function parseConfig($configPath): array
     {
         return Yaml::parseFile($configPath);
     }
 
     /**
+     * This returns a data structure to generate an example
+     * config for a yaml file, due to .phar restrictions
+     * accessing a stub file becomes problematic, so
+     * we do this instead!
+     *
      * @return string
      */
-    public static function stubConfig()
+    public static function stubConfig(): string
     {
         $config = [
             'table_one' => [
@@ -101,20 +123,18 @@ class UtilityService
             ],
         ];
 
-        return Yaml::dump($config);
+        return Yaml::dump($config); // Ironically this returns a different structure when written to file...
     }
 
     /**
+     * This is simply a brand related function to prefix any
+     * messages with the package branding.
+     *
      * @param string $string
      * @return string
      */
-
-    /**
-     * @param string $string
-     * @return string
-     */
-    public static function message(string $string)
+    public static function message(string $string): string
     {
-        return '🧠  forget-db :: ' . $string;
+        return '🧠  forget-db :: ' . $string; // Boop.
     }
 }

@@ -1,12 +1,22 @@
-<?php /** @noinspection ALL */
+<?php
 
 namespace App\Services;
 
+use PDO;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Class DatabaseService
+ * @package App\Services
+ */
 class DatabaseService
 {
 
+    /**
+     * DatabaseService constructor.
+     *
+     * @param array $config
+     */
     public function __construct(array $config)
     {
         switch (data_get($config, 'driver', 'mysql')) {
@@ -29,7 +39,13 @@ class DatabaseService
         }
     }
 
-    public static function optionsForMySql()
+    /**
+     * Returns a list of the default database options
+     * from Laravel for the mysql driver.
+     *
+     * @return array
+     */
+    public static function optionsForMySql(): array
     {
         return [
             'driver' => 'mysql',
@@ -47,7 +63,13 @@ class DatabaseService
         ];
     }
 
-    public static function optionsForPgSql()
+    /**
+     * Returns a list of the default database options
+     * from Laravel for the pgsql driver.
+     *
+     * @return array
+     */
+    public static function optionsForPgSql(): array
     {
         return [
             'driver' => 'pgsql',
@@ -63,7 +85,13 @@ class DatabaseService
         ];
     }
 
-    public static function optionsForSqlite()
+    /**
+     * Returns a list of the default database options
+     * from Laravel for the sqlite driver.
+     *
+     * @return array
+     */
+    public static function optionsForSqlite(): array
     {
         return [
             'driver' => 'sqlite',
@@ -72,7 +100,13 @@ class DatabaseService
         ];
     }
 
-    public static function optionsForSqlSrv()
+    /**
+     * Returns a list of the default database options
+     * from Laravel for the sqlsrv driver.
+     *
+     * @return array
+     */
+    public static function optionsForSqlSrv(): array
     {
         return [
             'driver' => 'sqlsrv',
@@ -86,10 +120,17 @@ class DatabaseService
         ];
     }
 
-    public function testConnection()
+    /**
+     * Checks we can connect to the database using
+     * the provided connection details.
+     *
+     * @return PDO
+     * @throws \Exception
+     */
+    public function testConnection(): PDO
     {
-        DB::reconnect();
+        DB::reconnect(); // We need to reconnect in case the database credentials changed.
 
-        return DB::connection()->getPdo();
+        return DB::connection()->getPdo(); // If it cannot connect, this will throw an exception.
     }
 }

@@ -1,4 +1,4 @@
-<?php /** @noinspection ALL */
+<?php
 
 namespace App\Commands;
 
@@ -7,6 +7,10 @@ use App\Services\ForgetDbService;
 use App\Services\UtilityService;
 use LaravelZero\Framework\Commands\Command;
 
+/**
+ * Class ForgetMeNow
+ * @package App\Commands
+ */
 class ForgetMeNow extends Command
 {
 
@@ -74,7 +78,7 @@ class ForgetMeNow extends Command
 
         try {
             $forgetdb = new ForgetDbService($config);
-            $forgetdb->forget($this);
+            $forgetdb->forget($this); // Right, this is where shit goes down and all the heavy lifting now starts!
         } catch (\Exception $e) {
             $this->notify('Whoops', 'Looks like something didn\'t go to plan...');
             $this->fail($e->getMessage());
@@ -86,17 +90,33 @@ class ForgetMeNow extends Command
         $this->warn('🎉⭐🍕⚡🎉⭐🍕⚡🎉 FINISHED ⭐🍕⚡🎉⭐🍕⚡🎉⭐🍕⚡');
     }
 
-    public function message(string $string)
+    /**
+     * Just an abstraction to apply branding to the info messages.
+     *
+     * @param string $string
+     */
+    public function message(string $string): void
     {
         $this->info(UtilityService::message($string));
     }
 
-    public function fail(string $string)
+    /**
+     * Just an abstraction to apply branding to the warn messages.
+     *
+     * @param string $string
+     */
+    public function fail(string $string): void
     {
         $this->warn(UtilityService::message($string));
     }
 
-    private function getDatabaseConfig()
+    /**
+     * This starts a mini wizard which collects the users
+     * database details for passing to the DatabaseService.
+     *
+     * @return array
+     */
+    private function getDatabaseConfig(): array
     {
         $driver = $this->choice('Which database driver do you need?', ['mysql', 'pgsql', 'sqlite', 'sqlsrv'], 0);
 

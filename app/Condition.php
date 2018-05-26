@@ -2,7 +2,6 @@
 
 namespace App;
 
-
 /**
  * Class Condition
  * @package App
@@ -10,10 +9,16 @@ namespace App;
 class Condition
 {
 
+    /**
+     * Contains the raw query provided from the config.
+     *
+     * @var string
+     */
     private $raw;
 
     /**
      * Condition constructor.
+     *
      * @param string $raw
      */
     public function __construct(string $raw)
@@ -22,6 +27,8 @@ class Condition
     }
 
     /**
+     * Does this warrant a comment?
+     *
      * @return string
      */
     public function getRaw(): string
@@ -30,6 +37,10 @@ class Condition
     }
 
     /**
+     * This just acts as a poor mans sanitiser
+     * to mutate some common keywords that
+     * might break the query builder.
+     *
      * @return string
      */
     public function getWhere(): string
