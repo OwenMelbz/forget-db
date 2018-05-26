@@ -64,11 +64,6 @@ Once you have your config complete you can run `forget-db ./path/to/config.yml` 
 
 After its completed you should get a notification to let you know!
 
-# To Do
-- Write the tests :D
-- Think of a way to get in
-- Submit it!
-
 # Warnings / Notes
 - There is no dry run, I recommend you test this on a temporary database first.
 - Not all faker field types are yet supported, e.g `date($format = 'Y-m-d', $max = 'now')`
