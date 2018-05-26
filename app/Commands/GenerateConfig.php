@@ -46,7 +46,7 @@ class GenerateConfig extends Command
 
         UtilityService::createFolderForFile($outputFilePath);
 
-        copy($stubPath, $outputFilePath);
+        file_put_contents($outputFilePath, UtilityService::stubConfig());
 
         $this->info(UtilityService::message(realpath($outputFilePath) . ' has been created for you to configure.'));
     }

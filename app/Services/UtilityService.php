@@ -30,6 +30,47 @@ class UtilityService
         return Yaml::parseFile($configPath);
     }
 
+    public static function stubConfig()
+    {
+        $config = [
+            'table_one' =>
+                [
+                    'key' => 'id',
+                    'conditions' =>
+                        [
+                            0 => 'where user_id != 1',
+                            1 => 'or cake LIKE %test%',
+                        ],
+                    'columns' =>
+                        [
+                            'firstname' => 'firstname',
+                            'lastname' => 'lastname',
+                        ],
+                ],
+            'table_two' =>
+                [
+                    'key' => 'id',
+                    'columns' =>
+                        [
+                            'firstname' => 'firstname',
+                            'lastname' => 'lastname',
+                        ],
+                ],
+            'table_three' =>
+                [
+                    'key' => 'id',
+                    'conditions' => 'where user_id = 1',
+                    'columns' =>
+                        [
+                            'firstname' => 'firstname',
+                            'lastname' => 'lastname',
+                        ],
+                ],
+        ];
+
+        return Yaml::dump($config);
+    }
+
     public static function message(string $string)
     {
         return '🧠  forget-db :: ' . $string;
