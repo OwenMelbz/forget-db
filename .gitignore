@@ -1,0 +1,7 @@
+/vendor
+/.idea
+/.vscode
+/.vagrant
+/database/database.sqlite
+forgetdb.yml
+.env
