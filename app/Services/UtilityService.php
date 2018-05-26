@@ -71,7 +71,7 @@ class UtilityService
 
         return str_slug(
             data_get($filenameInfo, 'filename')
-        ). '.yml'; // .yaml or .yml?
+        ) . '.yml'; // .yaml or .yml?
     }
 
     /**
@@ -138,5 +138,22 @@ class UtilityService
     public static function message(string $string): string
     {
         return '🧠  forget-db :: ' . $string; // Boop.
+    }
+
+    /**
+     * Helper function to return the ordinal for a number...
+     *
+     * @param $number
+     * @return string
+     */
+    public static function ordinal($number)
+    {
+        $ends = ['th','st','nd','rd','th','th','th','th','th','th'];
+
+        if ((($number % 100) >= 11) && (($number % 100) <= 13)) {
+            return $number . 'th';
+        } else {
+            return $number . $ends[$number % 10];
+        }
     }
 }

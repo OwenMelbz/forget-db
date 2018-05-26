@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Commands\ForgetMeNow;
+use App\Commands\ForgetMeNowCommand;
 use App\Services\DatabaseService;
 use App\Services\ForgetDbService;
 use App\Services\UtilityService;
@@ -34,7 +34,7 @@ class ForgetDbTest extends TestCase
 
         $service = new ForgetDbService($config);
 
-        $command = $this->createMock(ForgetMeNow::class);
+        $command = $this->createMock(ForgetMeNowCommand::class);
 
         $service->forget($command);
 

@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Commands\ForgetMeNow;
+use App\Commands\ForgetMeNowCommand;
 use App\Services\DatabaseService;
 use App\Services\ForgetDbService;
 use App\Services\UtilityService;
@@ -39,7 +39,7 @@ class TableTest extends TestCase
 
         $table = current($service->getTables());
 
-        $command = $this->createMock(ForgetMeNow::class);
+        $command = $this->createMock(ForgetMeNowCommand::class);
         $table->setMessenger($command);
 
         $this->assertInstanceOf(Table::class, $table);

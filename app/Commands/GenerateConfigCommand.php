@@ -7,10 +7,10 @@ use App\Services\UtilityService;
 use LaravelZero\Framework\Commands\Command;
 
 /**
- * Class GenerateConfig
+ * Class GenerateConfigCommand
  * @package App\Commands
  */
-class GenerateConfig extends Command
+class GenerateConfigCommand extends Command
 {
 
     /**

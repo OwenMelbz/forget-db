@@ -8,10 +8,10 @@ use App\Services\UtilityService;
 use LaravelZero\Framework\Commands\Command;
 
 /**
- * Class ForgetMeNow
+ * Class ForgetMeNowCommand
  * @package App\Commands
  */
-class ForgetMeNow extends Command
+class ForgetMeNowCommand extends Command
 {
 
     /**
