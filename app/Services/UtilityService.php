@@ -10,6 +10,11 @@ class UtilityService
     {
         $filenameInfo = pathinfo($fullPath);
         $folder = data_get($filenameInfo, 'dirname', './');
+        $folder = str_replace(['./', '.'], '', $folder);
+
+        if (empty($folder)) {
+            $folder = getcwd();
+        }
 
         if (!file_exists($folder)) {
             mkdir($folder, 0755, true);
