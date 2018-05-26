@@ -29,7 +29,7 @@ table_one:
   key: id
   conditions:
     - where user_id != 1
-    - orWhere cake LIKE %test%
+    - or cake LIKE "%test%"
   columns:
     firstname: firstname
     lastname: lastname
@@ -42,7 +42,7 @@ table_two:
 
 table_three:
   key: id
-  conditions: where user_id = 1
+  conditions: user_id = 1
   columns:
     firstname: firstname
     lastname: lastname
@@ -63,6 +63,11 @@ The last property is `columns` this is simply an array of column names, with the
 Once you have your config complete you can run `forget-db ./path/to/config.yml` the wizard will ask for your connection details, and then will start the cleanse.
 
 After its completed you should get a notification to let you know!
+
+# To Do
+- Write the tests :D
+- Think of a way to get in
+- Submit it!
 
 # Warnings / Notes
 - There is no dry run, I recommend you test this on a temporary database first.

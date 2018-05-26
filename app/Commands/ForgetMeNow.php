@@ -138,7 +138,7 @@ class ForgetMeNow extends Command
         $this->table(['option', 'value'], $confirmTable);
 
         while (!$confirmed = $this->confirm('Do the above settings look correct?', !config('app.production'))){
-            //return $this->getDatabaseConfig();
+            return $this->getDatabaseConfig();
         }
 
         return $usersConfiguration;
