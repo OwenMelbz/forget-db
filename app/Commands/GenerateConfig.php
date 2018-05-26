@@ -35,7 +35,7 @@ class GenerateConfig extends Command
         $path = $this->ask('Where do you want to save the config file to? (don\'t include the file name)', './');
 
         $filename = UtilityService::cleanseFilename($filename);
-        $outputFilePath = rtrim($path, '/') . '/' . $filename;
+        $outputFilePath = UtilityService::cleansePath($path) . '/' . $filename;
 
         if (file_exists($outputFilePath)) {
             if (!$this->confirm(realpath($outputFilePath) . ' already exists, do you want to overwrite it?')) {

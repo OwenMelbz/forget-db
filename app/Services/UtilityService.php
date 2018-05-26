@@ -6,15 +6,26 @@ use Symfony\Component\Yaml\Yaml;
 
 class UtilityService
 {
+    public static function cleansePath($path)
+    {
+        $path = ltrim($path, './');
+        $path = ltrim($path, '.');
+
+        if (empty($path)) {
+            $path = getcwd();
+        }
+
+        $path = rtrim($path, '/');
+
+        return $path;
+    }
+
     public static function createFolderForFile($fullPath)
     {
         $filenameInfo = pathinfo($fullPath);
-        $folder = data_get($filenameInfo, 'dirname', './');
-        $folder = str_replace(['./', '.'], '', $folder);
-
-        if (empty($folder)) {
-            $folder = getcwd();
-        }
+        $folder = static::cleansePath(
+            data_get($filenameInfo, 'dirname', './')
+        );
 
         if (!file_exists($folder)) {
             mkdir($folder, 0755, true);
