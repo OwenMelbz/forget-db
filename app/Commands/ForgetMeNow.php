@@ -45,6 +45,7 @@ class ForgetMeNow extends Command
 
         try {
             $config = UtilityService::parseConfig($configPath);
+            $forgetdb = new ForgetDbService($config);
         } catch (\Exception $e) {
             $this->notify('Whoops', 'Looks like something didn\'t go to plan...');
             $this->fail($e->getMessage());
@@ -77,7 +78,6 @@ class ForgetMeNow extends Command
         }
 
         try {
-            $forgetdb = new ForgetDbService($config);
             $forgetdb->forget($this); // Right, this is where shit goes down and all the heavy lifting now starts!
         } catch (\Exception $e) {
             $this->notify('Whoops', 'Looks like something didn\'t go to plan...');

@@ -105,6 +105,10 @@ class ForgetDbService
                 );
             }
 
+            if ($columns->isEmpty()) {
+                throw new Exception('No column mappings found, you need to define which columns you want to replace with fake data.');
+            }
+
             $table = new Table($tableName, $tablePrimaryKey, $conditions, $columns);
 
             $scheme[] = $table;
