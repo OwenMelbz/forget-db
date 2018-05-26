@@ -1,14 +1,19 @@
-<?php
+<?php /** @noinspection PhpUnhandledExceptionInspection */
 
 namespace App;
 
-use App\Commands\ForgetMeNow;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use LaravelZero\Framework\Commands\Command;
 
+/**
+ * Class Table
+ * @package App
+ */
 class Table
 {
+
     protected $name;
 
     protected $primaryKey;
@@ -19,6 +24,13 @@ class Table
 
     protected $messenger;
 
+    /**
+     * Table constructor.
+     * @param string $name
+     * @param string $primaryKey
+     * @param Collection $conditions
+     * @param Collection $columns
+     */
     public function __construct(string $name, string $primaryKey, Collection $conditions, Collection $columns)
     {
         $this->name = $name;
@@ -27,6 +39,10 @@ class Table
         $this->columns = $columns;
     }
 
+    /**
+     * @param Command $messenger
+     * @throws Exception
+     */
     public function forget(Command $messenger)
     {
         $this->messenger = $messenger;
@@ -38,6 +54,9 @@ class Table
         );
     }
 
+    /**
+     * @param Collection $rows
+     */
     private function writeRowsToDatabase(Collection $rows)
     {
         $total = $rows->count();
@@ -48,6 +67,7 @@ class Table
                     ->where($this->primaryKey, $row->pk)
                     ->update($row->updates);
 
+                /** @noinspection PhpUndefinedMethodInspection */
                 $this->messenger->message(
                     sprintf('%d/%d %s written to database.', ($i + 1), $total, str_plural('row', $total))
                 );
@@ -55,6 +75,11 @@ class Table
         }
     }
 
+    /**
+     * @param Collection $rows
+     * @return Collection
+     * @throws Exception
+     */
     private function cleanseRows(Collection $rows)
     {
         $total = $rows->count();
@@ -63,7 +88,7 @@ class Table
         foreach ($rows as $i => $row) {
             foreach ($this->columns as $column) {
                 if (!isset($row->{$column->getName()})) {
-                    throw new \Exception('We cannot find `'. $column->getName() .'` in the `' . $this->name . '` table.');
+                    throw new Exception('We cannot find `' . $column->getName() . '` in the `' . $this->name . '` table.');
                 }
 
                 $row->{$column->getName()} = $column->generate();
@@ -78,6 +103,7 @@ class Table
                 'updates' => $updates,
             ]);
 
+            /** @noinspection PhpUndefinedMethodInspection */
             $this->messenger->message(
                 sprintf('%d/%d %s re-generated.', ($i + 1), $total, str_plural('row', $total))
             );
@@ -86,6 +112,13 @@ class Table
         return $cleansedRows;
     }
 
+    /**
+     * @return Collection
+     */
+
+    /**
+     * @return Collection
+     */
     private function getColumnNames()
     {
         $names = collect();
@@ -99,6 +132,9 @@ class Table
         return $names;
     }
 
+    /**
+     * @return Collection
+     */
     private function getRows()
     {
         $query = DB::table($this->name);
@@ -122,10 +158,9 @@ class Table
             }
         }
 
-        dd($query->toSql());
-
         $results = $query->get();
 
+        /** @noinspection PhpUndefinedMethodInspection */
         $this->messenger->message(
             sprintf('%d %s found to process.', $results->count(), str_plural('row', $results->count()))
         );

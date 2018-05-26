@@ -2,26 +2,42 @@
 
 namespace App\Services;
 
-
+use App\Table;
+use Exception;
 use App\Column;
 use App\Condition;
-use App\Table;
 use LaravelZero\Framework\Commands\Command;
 
+/**
+ * Class ForgetDbService
+ * @package App\Services
+ */
 class ForgetDbService
 {
+
     protected $config;
 
     protected $scheme;
 
     protected $messenger;
 
+    protected $tables;
+
+    /**
+     * ForgetDbService constructor.
+     * @param array $config
+     * @throws Exception
+     */
     public function __construct(array $config)
     {
         $this->config = $config;
+        /** @noinspection PhpUnhandledExceptionInspection */
         $this->tables = $this->generateTablesFromConfig($config);
     }
 
+    /**
+     * @param Command $messenger
+     */
     public function forget(Command $messenger)
     {
         $this->messenger = $messenger;
@@ -31,16 +47,21 @@ class ForgetDbService
         }
     }
 
+    /**
+     * @param array $tables
+     * @return array
+     * @throws Exception
+     */
     private function generateTablesFromConfig(array $tables)
     {
         $scheme = [];
 
         foreach ($tables as $tableName => $properties) {
-
             $tablePrimaryKey = data_get($properties, 'key', null);
 
             if (empty($tablePrimaryKey)) {
-                throw new \Exception('No `key` property found for `' . $tableName . '` table');
+                /** @noinspection PhpUnhandledExceptionInspection */
+                throw new Exception('No `key` property found for `' . $tableName . '` table');
             }
 
             $columns = collect();

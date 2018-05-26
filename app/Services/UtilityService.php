@@ -4,8 +4,17 @@ namespace App\Services;
 
 use Symfony\Component\Yaml\Yaml;
 
+/**
+ * Class UtilityService
+ * @package App\Services
+ */
 class UtilityService
 {
+
+    /**
+     * @param $path
+     * @return mixed|string
+     */
     public static function cleansePath($path)
     {
         $path = str_replace('./', '', $path);
@@ -20,6 +29,10 @@ class UtilityService
         return $path;
     }
 
+    /**
+     * @param $fullPath
+     * @return bool|string
+     */
     public static function createFolderForFile($fullPath)
     {
         $filenameInfo = pathinfo($fullPath);
@@ -34,6 +47,10 @@ class UtilityService
         return realpath($fullPath);
     }
 
+    /**
+     * @param $filename
+     * @return string
+     */
     public static function cleanseFilename($filename)
     {
         $filenameInfo = pathinfo($filename);
@@ -41,11 +58,18 @@ class UtilityService
         return data_get($filenameInfo, 'filename') . '.yml';
     }
 
+    /**
+     * @param $configPath
+     * @return mixed
+     */
     public static function parseConfig($configPath)
     {
         return Yaml::parseFile($configPath);
     }
 
+    /**
+     * @return string
+     */
     public static function stubConfig()
     {
         $config = [
@@ -80,6 +104,15 @@ class UtilityService
         return Yaml::dump($config);
     }
 
+    /**
+     * @param string $string
+     * @return string
+     */
+
+    /**
+     * @param string $string
+     * @return string
+     */
     public static function message(string $string)
     {
         return '🧠  forget-db :: ' . $string;

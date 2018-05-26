@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection ALL */
 
 namespace App\Commands;
 
@@ -9,6 +9,7 @@ use LaravelZero\Framework\Commands\Command;
 
 class ForgetMeNow extends Command
 {
+
     /**
      * The signature of the command.
      *
@@ -101,15 +102,14 @@ class ForgetMeNow extends Command
 
         $this->message('Please provide us your configuration options for ' . $driver);
 
-        switch ($driver)
-        {
-            case "pgsql":
+        switch ($driver) {
+            case 'pgsql':
                 $options = DatabaseService::optionsForPgSql();
                 break;
-            case "sqlite":
+            case 'sqlite':
                 $options = DatabaseService::optionsForSqlite();
                 break;
-            case "sqlsrv":
+            case 'sqlsrv':
                 $options = DatabaseService::optionsForSqlSrv();
                 break;
             default:
@@ -121,7 +121,9 @@ class ForgetMeNow extends Command
         $confirmTable = [];
 
         foreach ($options as $option => $default) {
-            if ($option == 'driver') continue;
+            if ($option == 'driver') {
+                continue;
+            }
 
             if ($option === 'password') {
                 $usersConfiguration[$option] = $this->secret('Database:: ' . $option, $default);
@@ -137,10 +139,11 @@ class ForgetMeNow extends Command
 
         $this->table(['option', 'value'], $confirmTable);
 
-        while (!$confirmed = $this->confirm('Do the above settings look correct?', !config('app.production'))){
+        while (!$confirmed = $this->confirm('Do the above settings look correct?', !config('app.production'))) {
             return $this->getDatabaseConfig();
         }
 
         return $usersConfiguration;
     }
+
 }

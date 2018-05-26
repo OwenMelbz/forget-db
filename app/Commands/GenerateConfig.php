@@ -3,11 +3,16 @@
 namespace App\Commands;
 
 use App\Services\UtilityService;
-use Illuminate\Console\Scheduling\Schedule;
+
 use LaravelZero\Framework\Commands\Command;
 
+/**
+ * Class GenerateConfig
+ * @package App\Commands
+ */
 class GenerateConfig extends Command
 {
+
     /**
      * The signature of the command.
      *
@@ -29,8 +34,6 @@ class GenerateConfig extends Command
      */
     public function handle(): void
     {
-        $stubPath = resource_path('config.stub.yml');
-
         $filename = $this->ask('What do you want the config to be called? (skip the .yml)', 'forgetdb.yml');
         $path = $this->ask('Where do you want to save the config file to? (don\'t include the file name)', './');
 

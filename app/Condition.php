@@ -3,10 +3,19 @@
 namespace App;
 
 
+/**
+ * Class Condition
+ * @package App
+ */
 class Condition
 {
+
     private $raw;
 
+    /**
+     * Condition constructor.
+     * @param string $raw
+     */
     public function __construct(string $raw)
     {
         $this->raw = $raw;
@@ -20,6 +29,9 @@ class Condition
         return $this->raw;
     }
 
+    /**
+     * @return string
+     */
     public function getWhere(): string
     {
         $where = ltrim($this->raw, 'where ');

@@ -1,23 +1,22 @@
-<?php
+<?php /** @noinspection ALL */
 
 namespace App\Services;
-
 
 use Illuminate\Support\Facades\DB;
 
 class DatabaseService
 {
+
     public function __construct(array $config)
     {
-        switch (data_get($config, 'driver', 'mysql'))
-        {
-            case "pgsql":
+        switch (data_get($config, 'driver', 'mysql')) {
+            case 'pgsql':
                 $options = static::optionsForPgSql();
                 break;
-            case "sqlite":
+            case 'sqlite':
                 $options = static::optionsForSqlite();
                 break;
-            case "sqlsrv":
+            case 'sqlsrv':
                 $options = static::optionsForSqlSrv();
                 break;
             default:
