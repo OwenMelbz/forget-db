@@ -9,3 +9,10 @@ before_script:
     - travis_retry composer install --no-interaction --prefer-source --dev
 
 script: vendor/bin/phpunit
+
+notifications:
+  email:
+    recipients:
+      - owenmelbz@gmail.com
+    on_success: never
+    on_failure: always
