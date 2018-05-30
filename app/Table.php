@@ -136,7 +136,7 @@ class Table
 
         foreach ($rows as $i => $row) {
             foreach ($this->columns as $column) {
-                if (!isset($row->{$column->getName()})) {
+                if (!property_exists($row, $column->getName())) {
                     throw new Exception('We cannot find `' . $column->getName() . '` in the `' . $this->name . '` table.');
                 }
 
