@@ -16,7 +16,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // We only want one instance of faker, this allows
+        // us to use unique() to prevent data clashes.
+        $this->app->singleton('faker', function ($app) {
+            return \Faker\Factory::create();
+        });
     }
 
     /**

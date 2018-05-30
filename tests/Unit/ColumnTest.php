@@ -24,4 +24,12 @@ class ColumnTest extends TestCase
 
         $this->assertEquals('my_column', $name);
     }
+
+    public function test_i_can_get_a_unique_column()
+    {
+        $column = new Column('my_column', 'unique:email');
+        $name = $column->getName();
+
+        $this->assertEquals('my_column', $name);
+    }
 }

@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Faker\Factory as Faker;
-
 /**
  * Class Column
  * @package App
@@ -27,11 +25,12 @@ class Column
     protected $replacementMethod;
 
     /**
-     * Just an instance of Faker to replace the information.
+     * This flags if the field is required to be unique,
+     * which solves unique constraints such as emails.
      *
-     * @var \Faker\Generator
+     * @var string
      */
-    private $faker;
+    protected $unique;
 
     /**
      * Column constructor.
@@ -42,8 +41,8 @@ class Column
     public function __construct(string $name, string $replacementMethod)
     {
         $this->name = $name;
-        $this->replacementMethod = $replacementMethod;
-        $this->faker = Faker::create();
+        $this->unique = $this->checkIfUnique($replacementMethod);
+        $this->replacementMethod = $this->getReplacementMethod($replacementMethod);
     }
 
     /**
@@ -53,7 +52,11 @@ class Column
      */
     public function generate(): string
     {
-        return $this->faker->format($this->replacementMethod);
+        if ($this->unique) {
+            return app('faker')->unique()->format($this->replacementMethod);
+        }
+
+        return app('faker')->format($this->replacementMethod);
     }
 
     /**
@@ -65,4 +68,29 @@ class Column
     {
         return $this->name;
     }
+
+    /**
+     * Returns true/false depending if the unique modifier has been used.
+     *
+     * @return bool
+     */
+    private function checkIfUnique(string $string): bool
+    {
+        $parts = explode(':', $string);
+
+        return current($parts) === 'unique';
+    }
+
+    /**
+     * Returns the name of the faker method to be used.
+     *
+     * @return string
+     */
+    private function getReplacementMethod(string $string): string
+    {
+        $parts = explode(':', $string);
+
+        return end($parts);
+    }
+
 }
