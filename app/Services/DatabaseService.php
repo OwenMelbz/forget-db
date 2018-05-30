@@ -59,12 +59,12 @@ class DatabaseService
     {
         return [
             'driver' => 'mysql',
-            'host' => env('DB_HOST','127.0.0.1'),
-            'port' => env('DB_PORT','3306'),
-            'database' => env('DB_DATABASE','my_magical_database'),
-            'username' => env('DB_USERNAME','root'),
-            'password' => env('DB_PASSWORD',''),
-            'prefix' => env('DB_PREFIX',''),
+            'host' => EnvService::get('DB_HOST', '127.0.0.1'),
+            'port' => EnvService::get('DB_PORT', '3306'),
+            'database' => EnvService::get('DB_DATABASE', 'my_magical_database'),
+            'username' => EnvService::get('DB_USERNAME', 'root'),
+            'password' => EnvService::get('DB_PASSWORD', ''),
+            'prefix' => EnvService::get('DB_PREFIX', ''),
             'unix_socket' => '',
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
@@ -83,12 +83,12 @@ class DatabaseService
     {
         return [
             'driver' => 'pgsql',
-            'host' => env('DB_HOST','127.0.0.1'),
-            'port' => env('DB_PORT','5432'),
-            'database' => env('DB_DATABASE','my_magical_database'),
-            'username' => env('DB_USERNAME','root'),
-            'password' => env('DB_PASSWORD',''),
-            'prefix' => env('DB_PREFIX',''),
+            'host' => EnvService::get('DB_HOST', '127.0.0.1'),
+            'port' => EnvService::get('DB_PORT', '5432'),
+            'database' => EnvService::get('DB_DATABASE', 'my_magical_database'),
+            'username' => EnvService::get('DB_USERNAME', 'root'),
+            'password' => EnvService::get('DB_PASSWORD', ''),
+            'prefix' => EnvService::get('DB_PREFIX', ''),
             'charset' => 'utf8',
             'schema' => 'public',
             'sslmode' => 'prefer',
@@ -105,8 +105,8 @@ class DatabaseService
     {
         return [
             'driver' => 'sqlite',
-            'database' => env('DB_DATABASE','database.sqlite'),
-            'prefix' => env('DB_PREFIX',''),
+            'database' => EnvService::get('DB_DATABASE', 'database.sqlite'),
+            'prefix' => EnvService::get('DB_PREFIX', ''),
         ];
     }
 
@@ -120,12 +120,12 @@ class DatabaseService
     {
         return [
             'driver' => 'sqlsrv',
-            'host' => env('DB_HOST','127.0.0.1'),
-            'port' => env('DB_PORT','1433'),
-            'database' => env('DB_DATABASE','my_magical_database'),
-            'username' => env('DB_USERNAME','root'),
-            'password' => env('DB_PASSWORD',''),
-            'prefix' => env('DB_PREFIX',''),
+            'host' => EnvService::get('DB_HOST', '127.0.0.1'),
+            'port' => EnvService::get('DB_PORT', '1433'),
+            'database' => EnvService::get('DB_DATABASE', 'my_magical_database'),
+            'username' => EnvService::get('DB_USERNAME', 'root'),
+            'password' => EnvService::get('DB_PASSWORD', ''),
+            'prefix' => EnvService::get('DB_PREFIX', ''),
             'charset' => 'utf8',
         ];
     }

@@ -72,6 +72,7 @@ class Column
     /**
      * Returns true/false depending if the unique modifier has been used.
      *
+     * @param string $string
      * @return bool
      */
     private function checkIfUnique(string $string): bool
@@ -84,6 +85,7 @@ class Column
     /**
      * Returns the name of the faker method to be used.
      *
+     * @param string $string
      * @return string
      */
     private function getReplacementMethod(string $string): string

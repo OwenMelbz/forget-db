@@ -7,6 +7,10 @@ use App\Services\UpdateService;
 use App\Services\UtilityService;
 use LaravelZero\Framework\Commands\Command;
 
+/**
+ * Class UpdateCommand
+ * @package App\Commands
+ */
 class UpdateCommand extends Command
 {
 

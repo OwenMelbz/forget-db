@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use Dotenv\Dotenv;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -158,27 +157,4 @@ class UtilityService
         }
     }
 
-    /**
-     * Checks to see if there is a .env file in the directory.
-     *
-     * @return bool
-     */
-    public static function checkIfCanUseDotEnv(): bool
-    {
-        $potentialPath = getcwd() . '/.env';
-
-        return file_exists($potentialPath);
-    }
-
-    /**
-     * Uses DotEnv to load the environment variables..
-     *
-     * @return void
-     */
-    public static function loadDotEnv(): void
-    {
-        (new Dotenv(
-            getcwd()
-        ))->load();
-    }
 }
