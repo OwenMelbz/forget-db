@@ -56,12 +56,6 @@ class ForgetMeNowCommand extends Command
 
         $connected = false;
 
-        if ($aDotEnv = UtilityService::checkIfCanUseDotEnv()) {
-            if ($this->confirm('We found a .env file in your current directory, do you want to use it to help define your DB connection?', !config('app.production'))) {
-                UtilityService::loadDotEnv();
-            }
-        }
-
         while (!$connected) {
             try {
                 $connected = (new DatabaseService(
@@ -124,12 +118,7 @@ class ForgetMeNowCommand extends Command
      */
     private function getDatabaseConfig(): array
     {
-        $driverList = DatabaseService::getDriverOptions();
-        array_unshift($driverList, env('DB_CONNECTION', 'mysql'));
-        $driverList = array_unique($driverList);
-        $driverList = array_values($driverList);
-
-        $driver = $this->choice('Which database driver do you need?', $driverList, 0);
+        $driver = $this->choice('Which database driver do you need?', ['mysql', 'pgsql', 'sqlite', 'sqlsrv'], 0);
 
         $this->message('Please provide us your configuration options for ' . $driver);
 
@@ -158,11 +147,6 @@ class ForgetMeNowCommand extends Command
 
             if ($option === 'password') {
                 $usersConfiguration[$option] = $this->secret('Database:: ' . $option, $default);
-
-                if (is_null($usersConfiguration[$option]) && $envPass = env('DB_PASSWORD', null)) {
-                    $usersConfiguration[$option] = $envPass;
-                }
-
             } else {
                 $usersConfiguration[$option] = $this->ask('Database:: ' . $option, $default);
             }
