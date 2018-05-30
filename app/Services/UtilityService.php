@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Dotenv\Dotenv;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -146,7 +147,7 @@ class UtilityService
      * @param $number
      * @return string
      */
-    public static function ordinal($number)
+    public static function ordinal($number): string
     {
         $ends = ['th','st','nd','rd','th','th','th','th','th','th'];
 
@@ -155,5 +156,29 @@ class UtilityService
         } else {
             return $number . $ends[$number % 10];
         }
+    }
+
+    /**
+     * Checks to see if there is a .env file in the directory.
+     *
+     * @return bool
+     */
+    public static function checkIfCanUseDotEnv(): bool
+    {
+        $potentialPath = getcwd() . '/.env';
+
+        return file_exists($potentialPath);
+    }
+
+    /**
+     * Uses DotEnv to load the environment variables..
+     *
+     * @return void
+     */
+    public static function loadDotEnv(): void
+    {
+        (new Dotenv(
+            getcwd()
+        ))->load();
     }
 }
