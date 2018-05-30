@@ -61,6 +61,15 @@ The second property is `conditions` this should be an array of sql clauses if yo
 
 The last property is `columns` this is simply an array of column names, with their values set to Faker methods, you can get a full list of generators [Faker Generators here](https://github.com/fzaninotto/Faker) - most are easy to remember such as `name, email, company` etc
 
+### Modifiers
+
+Recently we introduced the ability to add modifiers to your column definitions, currently there is only one. To use a modifer just prefix the faker method with `modifer:` to create something like `modifer:email_address`
+
+ Name        | Description           |
+|:------------- |:-------------|
+| unique:      | Will utilise Fakers unique() method to generate unique data for a column |
+
+
 # Usage
 
 Once you have your config complete you can run `forget-db forget ./path/to/config.yml` the wizard will ask for your connection details, and then will start the cleanse.
