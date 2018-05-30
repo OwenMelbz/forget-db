@@ -40,6 +40,16 @@ class DatabaseService
     }
 
     /**
+     * Returns a list of the default database drivers.
+     *
+     * @return array
+     */
+    public static function getDriverOptions(): array
+    {
+        return ['mysql', 'pgsql', 'sqlite', 'sqlsrv'];
+    }
+
+    /**
      * Returns a list of the default database options
      * from Laravel for the mysql driver.
      *
@@ -49,12 +59,12 @@ class DatabaseService
     {
         return [
             'driver' => 'mysql',
-            'host' => '127.0.0.1',
-            'port' => '3306',
-            'database' => 'my_magical_database',
-            'username' => 'root',
-            'password' => '',
-            'prefix' => '',
+            'host' => env('DB_HOST','127.0.0.1'),
+            'port' => env('DB_PORT','3306'),
+            'database' => env('DB_DATABASE','my_magical_database'),
+            'username' => env('DB_USERNAME','root'),
+            'password' => env('DB_PASSWORD',''),
+            'prefix' => env('DB_PREFIX',''),
             'unix_socket' => '',
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
@@ -73,13 +83,13 @@ class DatabaseService
     {
         return [
             'driver' => 'pgsql',
-            'host' => '127.0.0.1',
-            'port' => '5432',
-            'database' => 'my_magical_database',
-            'username' => 'root',
-            'password' => '',
+            'host' => env('DB_HOST','127.0.0.1'),
+            'port' => env('DB_PORT','5432'),
+            'database' => env('DB_DATABASE','my_magical_database'),
+            'username' => env('DB_USERNAME','root'),
+            'password' => env('DB_PASSWORD',''),
+            'prefix' => env('DB_PREFIX',''),
             'charset' => 'utf8',
-            'prefix' => '',
             'schema' => 'public',
             'sslmode' => 'prefer',
         ];
@@ -95,8 +105,8 @@ class DatabaseService
     {
         return [
             'driver' => 'sqlite',
-            'database' => 'database.sqlite',
-            'prefix' => '',
+            'database' => env('DB_DATABASE','database.sqlite'),
+            'prefix' => env('DB_PREFIX',''),
         ];
     }
 
@@ -110,13 +120,13 @@ class DatabaseService
     {
         return [
             'driver' => 'sqlsrv',
-            'host' => 'localhost',
-            'port' => '1433',
-            'database' => 'my_magical_database',
-            'username' => 'root',
-            'password' => '',
+            'host' => env('DB_HOST','127.0.0.1'),
+            'port' => env('DB_PORT','1433'),
+            'database' => env('DB_DATABASE','my_magical_database'),
+            'username' => env('DB_USERNAME','root'),
+            'password' => env('DB_PASSWORD',''),
+            'prefix' => env('DB_PREFIX',''),
             'charset' => 'utf8',
-            'prefix' => '',
         ];
     }
 
