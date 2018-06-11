@@ -77,6 +77,7 @@ Once you have your config complete you can run `forget-db forget ./path/to/confi
 After its completed you should get a notification to let you know!
 
 # Warnings / Notes
+- Due to syntax and Laravel requirements this must be run via a php 7.1 binary
 - There is no dry run, I recommend you test this on a temporary database first.
 - Not all faker field types are yet supported, e.g `date($format = 'Y-m-d', $max = 'now')`
 - The system that is running the tool, must have a connection to the database server.
