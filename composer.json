@@ -51,6 +51,9 @@
         "post-create-project-cmd": [
             "@php application app:rename"
         ],
+        "clean": [
+            "php ./vendor/bin/phpcbf --standard=phpcs.xml ./app"
+        ],
         "build": [
             "php forget-db app:build"
         ],

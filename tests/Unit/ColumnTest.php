@@ -32,4 +32,15 @@ class ColumnTest extends TestCase
 
         $this->assertEquals('my_column', $name);
     }
+
+    public function test_i_can_get_handle_prefixed_column_names()
+    {
+        $column = new Column('my_column', 'email');
+
+        $name = $column->getName();
+        $prefixed = $column->getName('prefix');
+
+        $this->assertEquals('my_column', $name);
+        $this->assertEquals('prefix.my_column', $prefixed);
+    }
 }

@@ -38,6 +38,14 @@ class Table
     protected $conditions;
 
     /**
+     * A collection of App\Relationship to
+     * relationships/joins.
+     *
+     * @var Collection
+     */
+    protected $relationships;
+
+    /**
      * A collection of App\Column to
      * store the transformations.
      *
@@ -59,13 +67,15 @@ class Table
      * @param string $name
      * @param string $primaryKey
      * @param Collection $conditions
+     * @param Collection $relationships
      * @param Collection $columns
      */
-    public function __construct(string $name, string $primaryKey, Collection $conditions, Collection $columns)
+    public function __construct(string $name, string $primaryKey, Collection $conditions, Collection $relationships, Collection $columns)
     {
         $this->name = $name;
         $this->primaryKey = $primaryKey;
         $this->conditions = $conditions;
+        $this->relationships = $relationships;
         $this->columns = $columns;
     }
 
@@ -110,7 +120,7 @@ class Table
         foreach ($rows as $i => $row) {
             DB::transaction(function () use ($row, $total, $i) {
                 DB::table($this->name)
-                    ->where($this->primaryKey, $row->pk)
+                    ->where($this->getPrefixedPrimaryKey(), $row->pk)
                     ->update($row->updates);
 
                 $this->messenger->message(
@@ -161,6 +171,18 @@ class Table
     }
 
     /**
+     * Returns a prefixed name of the primary key
+     * to allow joining of various ables which have
+     * the name column names, e.g it converts id into users.id.
+     *
+     * @return string
+     */
+    private function getPrefixedPrimaryKey(): string
+    {
+        return $this->name . '.' . $this->primaryKey;
+    }
+
+    /**
      * A helper function to get an array
      * of the columns we want to transform.
      *
@@ -172,7 +194,7 @@ class Table
 
         foreach ($this->columns as $column) {
             $names->push(
-                $column->getName()
+                $column->getName($this->name)
             );
         }
 
@@ -191,13 +213,27 @@ class Table
         $query = DB::table($this->name);
 
         $columnsToSelect = $this->getColumnNames();
-        $columnsToSelect->prepend($this->primaryKey);
+        $columnsToSelect->prepend($this->getPrefixedPrimaryKey());
 
         // To make life more manageable, we only select the columns that
         // we're actually going to transform.
         $query->select(
             $columnsToSelect->toArray()
         );
+
+        foreach ($this->relationships as $relationship) {
+            switch ($relationship->getType()) {
+                case 'left':
+                    $query->leftJoin(...$relationship->getJoin());
+                    break;
+                case 'right':
+                    $query->rightJoin(...$relationship->getJoin());
+                    break;
+                default:
+                    $query->join(...$relationship->getJoin());
+                    break;
+            }
+        }
 
         foreach ($this->conditions as $condition) {
             if (str_contains(strtolower($condition->getRaw()), 'or')) {

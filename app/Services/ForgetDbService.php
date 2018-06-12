@@ -6,6 +6,7 @@ use App\Table;
 use Exception;
 use App\Column;
 use App\Condition;
+use App\Relationship;
 use LaravelZero\Framework\Commands\Command;
 
 /**
@@ -92,10 +93,17 @@ class ForgetDbService
 
             $columns = collect();
             $conditions = collect();
+            $relationships = collect();
 
             foreach (array_wrap($properties['conditions'] ?? []) as $condition) {
                 $conditions->push(
                     new Condition($condition)
+                );
+            }
+
+            foreach (array_wrap($properties['joins'] ?? []) as $relationship) {
+                $relationships->push(
+                    new Relationship($relationship)
                 );
             }
 
@@ -109,7 +117,7 @@ class ForgetDbService
                 throw new Exception('No column mappings found, you need to define which columns you want to replace with fake data.');
             }
 
-            $table = new Table($tableName, $tablePrimaryKey, $conditions, $columns);
+            $table = new Table($tableName, $tablePrimaryKey, $conditions, $relationships, $columns);
 
             $scheme[] = $table;
         }

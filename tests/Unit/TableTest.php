@@ -52,4 +52,5 @@ class TableTest extends TestCase
         $this->assertNotEquals($before->user_name, $after->user_name);
         $this->assertNotEquals($before->user_email, $after->user_email);
     }
+
 }

@@ -64,8 +64,12 @@ class Column
      *
      * @return string
      */
-    public function getName(): string
+    public function getName($prefix = null): string
     {
+        if ($prefix) {
+            return $prefix . '.' . $this->name;
+        }
+
         return $this->name;
     }
 

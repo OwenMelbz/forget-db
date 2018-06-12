@@ -117,7 +117,8 @@ class UtilityService
             ],
             'table_three' => [
                 'key' => 'user_id',
-                'conditions' => 'user_id = 1',
+                'conditions' => 'table_two.user_id = 1',
+                'joins' => 'table_two on table_two.user_id = table_three.table_two_id',
                 'columns' => [
                     'user_name' => 'name',
                     'user_email' => 'email',

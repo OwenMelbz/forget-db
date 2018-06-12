@@ -45,7 +45,8 @@ table_two:
 
 table_three:
   key: id
-  conditions: user_id = 1
+  conditions: table_two.id = 1
+  joins: table_two on table_two.id = table_three.table_two_id
   columns:
     firstname: firstname
     lastname: lastname
@@ -57,9 +58,11 @@ Each top level item in the config file is a database table e.g `table_one`
 
 The first **required** property is `key` this is very important as it defines which column is used for the update query and most likely needs to be unique.
 
-The second property is `conditions` this should be an array of sql clauses if you need to restrict usage, e.g if you only need user_id 1 to be forgotten, then you can add `where user_id = 1` you should be able to have multiple conditions, these get passed into Laravels' `whereRaw` method, so check out those documents if you need more advance queries.
+The second **required** property is `columns` this is simply an array of column names, with their values set to Faker methods, you can get a full list of generators [Faker Generators here](https://github.com/fzaninotto/Faker) - most are easy to remember such as `name, email, company` etc
 
-The last property is `columns` this is simply an array of column names, with their values set to Faker methods, you can get a full list of generators [Faker Generators here](https://github.com/fzaninotto/Faker) - most are easy to remember such as `name, email, company` etc
+The first **optional** property is `conditions` this should be an array of sql clauses if you need to restrict usage, e.g if you only need user_id 1 to be forgotten, then you can add `where user_id = 1` you should be able to have multiple conditions, these get passed into Laravels' `whereRaw` method, so check out those documents if you need more advance queries.
+
+The second **optional** property is `joins` this can be a string or array of joins which will be used to accompany the conditions, it takes a simple join query in the following format `joined_table on joined_table.column = other_table.column`, you can use the modifier system to prefix a table with a join type, e.g `left:tablename on...` this gets passed to Laravel's `leftJoin()`, `rightJoin()` and `join()` functions.
 
 ## Modifiers
 
@@ -68,6 +71,7 @@ Recently we introduced the ability to add modifiers to your column definitions, 
  Name        | Description           |
 |:------------- |:-------------|
 | unique:      | Will utilise Fakers unique() method to generate unique data for a column |
+| left/right:  | Allows you to define the type of join to execute |
 
 
 # Usage
