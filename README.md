@@ -98,6 +98,11 @@ We do not have a full dry-run system, however you can preview the query that sel
 +----+-------------------------+------------------+
 ```
 
+What it doesn't do is:
+
+- Give you what the data will look like AFTER you run it
+- Give you the update commands it will run
+
 > Warning - When doing a dry run, remember that it will output to your terminal, so if you are exposing sensitive data make sure you're taking the correct precautions!
 
 # Warnings / Notes
