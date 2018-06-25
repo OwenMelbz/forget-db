@@ -45,19 +45,13 @@ class Condition
      */
     public function getWhere(): string
     {
-        $where = ltrim($this->raw, 'where ');
-        $where = ltrim($where, 'WHERE ');
-        $where = ltrim($where, 'Where ');
-
-        $where = ltrim($where, 'or ');
-        $where = ltrim($where, 'OR ');
-        $where = ltrim($where, 'Or ');
-        $where = ltrim($where, '|| ');
-
-        $where = ltrim($where, 'and ');
-        $where = ltrim($where, 'AND ');
-        $where = ltrim($where, 'And ');
-        $where = ltrim($where, '&& ');
+        $where = trim($this->raw);
+        $where = preg_replace('/^where/i', '', $where);
+        $where = preg_replace('/^or/i', '', $where);
+        $where = preg_replace('/^\|\|/i', '', $where);
+        $where = preg_replace('/^and/i', '', $where);
+        $where = preg_replace('/^\&\&/i', '', $where);
+        $where = trim($where);
 
         return $where;
     }
