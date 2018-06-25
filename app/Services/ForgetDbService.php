@@ -39,13 +39,21 @@ class ForgetDbService
     protected $tables;
 
     /**
+     * Defines if we're running in dry-run mode
+     *
+     * @var boolean
+     */
+    protected $dry = false;
+
+    /**
      * ForgetDbService constructor.
      *
      * @param array $config
      * @throws Exception
      */
-    public function __construct(array $config)
+    public function __construct(array $config, bool $dry = false)
     {
+        $this->dry = $dry;
         $this->config = $config;
         $this->tables = $this->generateTablesFromConfig($config);
     }
@@ -68,6 +76,11 @@ class ForgetDbService
         $this->messenger = $messenger;
 
         foreach ($this->getTables() as $table) {
+            if ($this->dry) {
+                $table->preview($this->messenger);
+                continue;
+            }
+
             $table->forget($this->messenger);
         }
     }

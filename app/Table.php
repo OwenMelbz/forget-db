@@ -107,6 +107,50 @@ class Table
     }
 
     /**
+     * This is the preview function which shows which rows will be affected
+     *
+     * @param Command $messenger
+     * @throws Exception
+     */
+    public function preview(Command $messenger): void
+    {
+        $this->setMessenger($messenger);
+
+        DB::enableQueryLog();
+
+        $rows = $this->getRows();
+        $queryLog = DB::getQueryLog();
+
+        if ($query = end($queryLog)) {
+            $messenger->message('Query run... ' . $query['query']);
+        }
+
+        $maxRowsBeforePrompt = 50;
+
+        if ($rows->count() > $maxRowsBeforePrompt) {
+            if (!$messenger->confirm('There are more than ' . $maxRowsBeforePrompt . ' results, do you want to display them all? It might crash... 💥  ', 'yes')) {
+                $messenger->message($this->name . ' Done!');
+                return;
+            }
+        }
+
+        if ($rows->count() === 0) {
+            $headers = [$this->getPrefixedPrimaryKey()] + $this->getColumnNames()->toArray();
+            $table = [];
+        } else {
+            $firstRow = (array) current($rows->toArray());
+            $headers = array_keys($firstRow);
+            $table = $rows->map(function ($row) {
+                return (array) $row;
+            })->toArray();
+        }
+
+        $messenger->info(''); // just a blank line for readability :)
+        $messenger->table($headers, $table);
+        $messenger->info('');
+    }
+
+    /**
      * Here we take a Collection of transformed rows
      * to insert back into the database based
      * off of the primary key.

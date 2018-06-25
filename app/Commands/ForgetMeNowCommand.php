@@ -20,7 +20,7 @@ class ForgetMeNowCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'forget { config : Path to a config file }';
+    protected $signature = 'forget { config : Path to a config file } { --dry : Will show you the queries and the results but will not do the replacements }';
 
     /**
      * The description of the command.
@@ -46,7 +46,7 @@ class ForgetMeNowCommand extends Command
 
         try {
             $config = UtilityService::parseConfig($configPath);
-            $forgetdb = new ForgetDbService($config);
+            $forgetdb = new ForgetDbService($config, $this->option('dry'));
         } catch (\Exception $e) {
             $this->notify('Whoops', 'Looks like something didn\'t go to plan...');
             $this->fail($e->getMessage());
@@ -78,7 +78,7 @@ class ForgetMeNowCommand extends Command
 
         $this->message('database connection established, we have lift off! 🚀');
 
-        if (!$this->confirm('Are you ready to start? This is your last chance to bail 💦', !config('app.production'))) {
+        if (!$this->confirm('Are you ready to start? This is your last chance to bail, you can always try out --dry first! 💦', !config('app.production'))) {
             $this->notify('Whoops', 'Bailing! 💦💦💦');
             $this->fail('Bailing! 💦💦💦');
             exit(0);

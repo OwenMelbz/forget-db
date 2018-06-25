@@ -78,11 +78,31 @@ Recently we introduced the ability to add modifiers to your column definitions, 
 
 Once you have your config complete you can run `forget-db forget ./path/to/config.yml` the wizard will ask for your connection details, and then will start the cleanse.
 
+If forget-db finds a .env file within your current working directory, it will try to populate the default options with what is within it. Typically Laravel style connections work out of the box!
+
 After its completed you should get a notification to let you know!
+
+## Dry-run
+
+We do not have a full dry-run system, however you can preview the query that selects your data set, and a table of the data that it has found, simply specify the `--dry` arg after your command e.g `forget-db forget ./config --dry` - this will only run "selects" on your database and will not write any changes! You will see something similar to:
+
+```
+🧠  forget-db :: 2 rows found to process.
+🧠  forget-db :: Query run... select `users`.`id`, `users`.`email`, `users`.`password` from `users`
+
++----+-------------------------+------------------+
+| id | email                   | password         |
++----+-------------------------+------------------+
+| 1  | arvel.bradtke@auer.com  | 371817583255573  |
+| 2  | remington54@volkman.org | 6011543368953199 |
++----+-------------------------+------------------+
+```
+
+> Warning - When doing a dry run, remember that it will output to your terminal, so if you are exposing sensitive data make sure you're taking the correct precautions!
 
 # Warnings / Notes
 - Due to syntax and Laravel requirements this must be run via a php 7.1 binary
-- There is no dry run, I recommend you test this on a temporary database first.
+- There is no full dry run, I recommend you test this on a temporary database first or test your conditions using the --dry arg
 - Not all faker field types are yet supported, e.g `date($format = 'Y-m-d', $max = 'now')`
 - The system that is running the tool, must have a connection to the database server.
 - Due to trying to keep optimial server compatibility, updates are not done in bulk, but are done one at a time, so make sure you're aware of any row/table locking on your server.
