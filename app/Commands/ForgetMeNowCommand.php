@@ -89,6 +89,7 @@ class ForgetMeNowCommand extends Command
             $forgetdb->forget($this);
         } catch (\Exception $e) {
             $this->fail($e->getMessage());
+            $this->fail('Error while updating database, exiting...');
             exit(1);
         }
 
