@@ -132,7 +132,8 @@ class ForgetMeNowCommand extends Command
 
         $driver = $this->choice('Which database driver do you need?', $driverList, 0);
 
-        $this->message('Please provide configuration options for ' . $driver);
+        if ( !$this->option('no-interaction') )
+            $this->message('Please provide configuration options for ' . $driver);
 
         switch ($driver) {
             case 'pgsql':
@@ -155,10 +156,7 @@ class ForgetMeNowCommand extends Command
         foreach ($options as $option => $default) {
             if ($option == 'driver') {
                 $usersConfiguration[$option] = $options[$option];
-                continue;
-            }
-
-            if ($option === 'password') {
+            } elseif ($option === 'password') {
                 $usersConfiguration[$option] = $this->secret('Database:: ' . $option, $default);
 
                 if (is_null($usersConfiguration[$option]) && $envPass = EnvService::get('DB_PASSWORD', null)) {
