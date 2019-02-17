@@ -41,7 +41,7 @@ class ForgetMeNowCommand extends Command
         if (!$configPath || ($configPath && !file_exists($configPath))) {
             $this->notify('Whoops', 'Looks like something didn\'t go to plan...');
             $this->fail('Cannot find config at ' . $this->argument('config'));
-            exit(0);
+            exit(1);
         }
 
         try {
@@ -50,7 +50,7 @@ class ForgetMeNowCommand extends Command
         } catch (\Exception $e) {
             $this->notify('Whoops', 'Looks like something didn\'t go to plan...');
             $this->fail($e->getMessage());
-            exit(0);
+            exit(1);
         }
 
         $this->message(sprintf('%d %s configured to forget.', count($config), str_plural('table', count($config))));
@@ -84,7 +84,7 @@ class ForgetMeNowCommand extends Command
         if (!$this->confirm('Are you ready to start? This is your last chance to bail, you can always try out --dry first! 💦', !config('app.production'))) {
             $this->notify('Whoops', 'Bailing! 💦💦💦');
             $this->fail('Bailing! 💦💦💦');
-            exit(0);
+            exit(1);
         }
 
         try {
@@ -92,7 +92,7 @@ class ForgetMeNowCommand extends Command
         } catch (\Exception $e) {
             $this->notify('Whoops', 'Looks like something didn\'t go to plan...');
             $this->fail($e->getMessage());
-            exit(0);
+            exit(1);
         }
 
         $this->notify('Who are you again?', 'We seem to have forgotten everything');
