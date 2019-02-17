@@ -42,7 +42,7 @@ class GenerateConfigCommand extends Command
 
         if (file_exists($outputFilePath)) {
             if (!$this->confirm(realpath($outputFilePath) . ' already exists, do you want to overwrite it?')) {
-                $this->error(UtilityService::message('Bye then!'));
+                $this->error(UtilityService::message('Not going to overwrite existing file, exiting without action.'));
                 exit(1);
             }
         }
