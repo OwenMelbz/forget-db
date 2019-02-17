@@ -39,7 +39,6 @@ class ForgetMeNowCommand extends Command
         $configPath = realpath($this->argument('config'));
 
         if (!$configPath || ($configPath && !file_exists($configPath))) {
-            $this->notify('Whoops', 'Looks like something didn\'t go to plan...');
             $this->fail('Cannot find config at ' . $this->argument('config'));
             exit(1);
         }
@@ -48,7 +47,6 @@ class ForgetMeNowCommand extends Command
             $config = UtilityService::parseConfig($configPath);
             $forgetdb = new ForgetDbService($config, $this->option('dry'));
         } catch (\Exception $e) {
-            $this->notify('Whoops', 'Looks like something didn\'t go to plan...');
             $this->fail($e->getMessage());
             exit(1);
         }
@@ -69,35 +67,34 @@ class ForgetMeNowCommand extends Command
                     $this->getDatabaseConfig()
                 ))->testConnection();
             } catch (\Exception $e) {
-                $this->notify('Whoops', '🐳 Get the fail whale out...');
                 $this->fail($e->getMessage());
                 $this->line('');
-                if (!$this->option('no-interaction'))
-                    $this->fail('😒 let\'s try again shall we?');
-                else
+                if (!$this->option('no-interaction')) {
+                    $this->fail('Could not connect to database, starting over...');
+                } else {
+                    $this->fail('Could not connect to database!');
                     exit(1);
+                }
             }
         }
 
-        $this->message('database connection established, we have lift off! 🚀');
+        $this->message('Database connection successfully established.');
 
-        if (!$this->confirm('Are you ready to start? This is your last chance to bail, you can always try out --dry first! 💦', !config('app.production'))) {
-            $this->notify('Whoops', 'Bailing! 💦💦💦');
-            $this->fail('Bailing! 💦💦💦');
+        if (!$this->confirm('Ready to start operation? In unsure, please answer \'no\' and re-run with \'--dry\' switch to list records to be erased.', !config('app.production'))) {
+            $this->fail('Exiting without action...');
             exit(1);
         }
 
         try {
-            $forgetdb->forget($this); // Right, this is where shit goes down and all the heavy lifting now starts!
+            $forgetdb->forget($this);
         } catch (\Exception $e) {
-            $this->notify('Whoops', 'Looks like something didn\'t go to plan...');
             $this->fail($e->getMessage());
             exit(1);
         }
 
-        $this->notify('Who are you again?', 'We seem to have forgotten everything');
+        $this->notify('Operation completed', 'All data has been successfully wiped from the database.');
         $this->line('');
-        $this->warn('🎉⭐🍕⚡🎉⭐🍕⚡🎉 FINISHED ⭐🍕⚡🎉⭐🍕⚡🎉⭐🍕⚡');
+        $this->warn('Command completed successfully, exiting...');
     }
 
     /**
@@ -135,7 +132,7 @@ class ForgetMeNowCommand extends Command
 
         $driver = $this->choice('Which database driver do you need?', $driverList, 0);
 
-        $this->message('Please provide us your configuration options for ' . $driver);
+        $this->message('Please provide configuration options for ' . $driver);
 
         switch ($driver) {
             case 'pgsql':

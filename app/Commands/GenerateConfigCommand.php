@@ -25,7 +25,7 @@ class GenerateConfigCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Generates a yaml config file for filling out';
+    protected $description = 'Generates an example yaml config file';
 
     /**
      * Execute the console command.

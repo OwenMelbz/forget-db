@@ -26,7 +26,7 @@ class UpdateCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Will attempt to update forget-db!';
+    protected $description = 'Update forget-db to latest release';
 
     /**
      * Execute the console command.
@@ -38,12 +38,12 @@ class UpdateCommand extends Command
         $updater = new UpdateService();
 
         if (!$updater->shouldUpdate()) {
-            $this->fail('You should only be updating the self contained .phar version!');
+            $this->fail('This command can only be used to update the self contained .phar version, exiting...');
             exit(1);
         }
 
         if (!$updateAvailable = $updater->searchForUpdates()) {
-            $this->fail('Looks like you\'re a-okay kid, no updates needed!');
+            $this->fail('Already on latest version.');
             exit(0);
         }
 
@@ -54,24 +54,18 @@ class UpdateCommand extends Command
         );
 
         try {
-            $downloadCount = UtilityService::ordinal(
-                (int) data_get($updateAvailable, 'download.download_count') + 1
-            );
-
-            $this->message('Downloading... This might take a moment!');
-            $this->message('Fun fact whilst you wait, you are the ' . $downloadCount . ' person to update to this version.');
+            $this->message('Downloading latest version...');
 
             $updatePath = $updater->updateTo($updateAvailable);
         } catch (Exception $e) {
-            $this->notify('Whoops', 'Looks like something didn\'t go to plan...');
             $this->fail($e->getMessage());
             exit(1);
         }
 
         $this->line('');
-        $this->line('If your happy the update was a success, feel free to delete the backup stored at ' . $updatePath . '.backup');
+        $this->line('Previous version has been backed up as ' . $updatePath . '.backup' );
         $this->line('');
-        $this->warn('🎉⭐🍕⚡🎉⭐🍕⚡🎉 UPDATED TO ' . $newVersion . ' ⭐🍕⚡🎉⭐🍕⚡🎉⭐🍕⚡');
+        $this->warn('Successfully updated to version ' . $newVersion );
         exit;
     }
 
