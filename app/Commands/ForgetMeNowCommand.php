@@ -154,6 +154,7 @@ class ForgetMeNowCommand extends Command
 
         foreach ($options as $option => $default) {
             if ($option == 'driver') {
+                $usersConfiguration[$option] = $options[$option];
                 continue;
             }
 
