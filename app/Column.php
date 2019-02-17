@@ -59,10 +59,16 @@ class Column
         }
 
         if ($this->unique) {
-            return app('faker')->unique()->format($formatterName ? $formatterName : $this->replacementMethod, $formatterArgs ? array($formatterArgs) : null);
+            if (isset($formatterName, $formatterArgs))
+                return app('faker')->unique()->format($formatterName, explode(',', $formatterArgs));
+            else
+                return app('faker')->unique()->format($this->replacementMethod);
         }
 
-        return app('faker')->format($formatterName ? $formatterName : $this->replacementMethod, $formatterArgs ? array($formatterArgs) : null);
+        if (isset($formatterName, $formatterArgs))
+            return app('faker')->format($formatterName, explode(',', $formatterArgs));
+        else
+            return app('faker')->format($this->replacementMethod);
     }
 
     /**
