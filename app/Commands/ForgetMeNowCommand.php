@@ -72,7 +72,10 @@ class ForgetMeNowCommand extends Command
                 $this->notify('Whoops', '🐳 Get the fail whale out...');
                 $this->fail($e->getMessage());
                 $this->line('');
-                $this->fail('😒 let\'s try again shall we?');
+                if (!$this->option('no-interaction'))
+                    $this->fail('😒 let\'s try again shall we?');
+                else
+                    exit(1);
             }
         }
 
