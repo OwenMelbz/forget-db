@@ -1,18 +1,22 @@
 {
-    "name": "owenmelbz/forget-db",
+    "name": "kissg1988/forget-db",
     "description": "A simple GDPR inspired tool to anonymise confidential database data.",
     "keywords": ["laravel", "database", "cli", "gdpr"],
-    "homepage": "https://github.com/OwenMelbz/forget-db",
+    "homepage": "https://github.com/kissg1988/forget-db",
     "type": "project",
     "license": "MIT",
     "support": {
-        "issues": "https://github.com/OwenMelbz/forget-db/issues",
-        "source": "https://github.com/OwenMelbz/forget-db"
+        "issues": "https://github.com/kissg1988/forget-db/issues",
+        "source": "https://github.com/kissg1988/forget-db"
     },
     "authors": [
         {
             "name": "Owen Melbourne",
             "email": "owenmelbz@gmail.com"
+        },
+        {
+            "name": "Gergely Kiss",
+            "email": "mail.gery@gmail.com"
         }
     ],
     "require": {
