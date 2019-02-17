@@ -52,11 +52,23 @@ class Column
      */
     public function generate(): string
     {
-        if ($this->unique) {
-            return app('faker')->unique()->format($this->replacementMethod);
+        if ($paramStart = strpos($this->replacementMethod, '(')) {
+            $paramEnd = strpos($this->replacementMethod, ')');
+            $formatterName = substr($this->replacementMethod, 0, $paramStart);
+            $formatterArgs = trim(substr($this->replacementMethod, $paramStart + 1, $paramEnd - $paramStart - 1), '\'"');
         }
 
-        return app('faker')->format($this->replacementMethod);
+        if ($this->unique) {
+            if (isset($formatterName, $formatterArgs))
+                return app('faker')->unique()->format($formatterName, explode(',', $formatterArgs));
+            else
+                return app('faker')->unique()->format($this->replacementMethod);
+        }
+
+        if (isset($formatterName, $formatterArgs))
+            return app('faker')->format($formatterName, explode(',', $formatterArgs));
+        else
+            return app('faker')->format($this->replacementMethod);
     }
 
     /**
