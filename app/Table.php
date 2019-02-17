@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App;
 
@@ -128,7 +128,7 @@ class Table
         $maxRowsBeforePrompt = 50;
 
         if ($rows->count() > $maxRowsBeforePrompt) {
-            if (!$messenger->confirm('There are more than ' . $maxRowsBeforePrompt . ' results, do you want to display them all? It might crash... 💥  ', 'yes')) {
+            if (!$messenger->confirm('There are more than ' . $maxRowsBeforePrompt . ' results, do you want to display them all?', 'yes')) {
                 $messenger->message($this->name . ' Done!');
                 return;
             }
