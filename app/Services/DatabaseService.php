@@ -65,10 +65,10 @@ class DatabaseService
             'username' => EnvService::get('DB_USERNAME', 'root'),
             'password' => EnvService::get('DB_PASSWORD', ''),
             'prefix' => EnvService::get('DB_PREFIX', ''),
-            'unix_socket' => '',
-            'charset' => 'utf8mb4',
-            'collation' => 'utf8mb4_unicode_ci',
-            'strict' => false,
+            'unix_socket' => EnvService::get('DB_UNIXSOCKET', ''),
+            'charset' => EnvService::get('DB_CHARSET', 'utf8mb4'),
+            'collation' => EnvService::get('DB_COLLATION', 'utf8mb4_unicode_ci'),
+            'strict' => EnvService::get('DB_STRICT', false),
             'engine' => null,
         ];
     }
@@ -89,9 +89,9 @@ class DatabaseService
             'username' => EnvService::get('DB_USERNAME', 'root'),
             'password' => EnvService::get('DB_PASSWORD', ''),
             'prefix' => EnvService::get('DB_PREFIX', ''),
-            'charset' => 'utf8',
-            'schema' => 'public',
-            'sslmode' => 'prefer',
+            'charset' => EnvService::get('DB_CHARSET', 'utf8'),
+            'schema' => EnvService::get('DB_SCHEMA', 'public'),
+            'sslmode' => EnvService::get('DB_SSLMODE', 'prefer'),
         ];
     }
 
@@ -126,7 +126,7 @@ class DatabaseService
             'username' => EnvService::get('DB_USERNAME', 'root'),
             'password' => EnvService::get('DB_PASSWORD', ''),
             'prefix' => EnvService::get('DB_PREFIX', ''),
-            'charset' => 'utf8',
+            'charset' => EnvService::get('DB_CHARSET', 'utf8'),
         ];
     }
 
