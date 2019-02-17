@@ -56,7 +56,7 @@ class ForgetMeNowCommand extends Command
         $connected = false;
 
         if ($aDotEnv = EnvService::checkIfCanUseDotEnv()) {
-            if ($this->confirm('We found a .env file in your current directory, do you want to use it to help define your DB connection?', !config('app.production'))) {
+            if ($this->confirm('We found a .env file in your current directory, do you want to use it to help define your DB connection?', $this->option('no-interaction') ? true : !config('app.production'))) {
                 EnvService::loadDotEnv();
             }
         }
@@ -80,7 +80,7 @@ class ForgetMeNowCommand extends Command
 
         $this->message('Database connection successfully established.');
 
-        if (!$this->confirm('Ready to start operation? In unsure, please answer \'no\' and re-run with \'--dry\' switch to list records to be erased.', !config('app.production'))) {
+        if (!$this->confirm('Ready to start operation? In unsure, please answer \'no\' and re-run with \'--dry\' switch to list records to be erased.', $this->option('no-interaction') ? true : !config('app.production'))) {
             $this->fail('Exiting without action...');
             exit(1);
         }
@@ -176,7 +176,7 @@ class ForgetMeNowCommand extends Command
 
         $this->table(['option', 'value'], $confirmTable);
 
-        while (!$confirmed = $this->confirm('Do the above settings look correct?', !config('app.production'))) {
+        while (!$confirmed = $this->confirm('Do the above settings look correct?', $this->option('no-interaction') ? true : !config('app.production'))) {
             return $this->getDatabaseConfig();
         }
 
