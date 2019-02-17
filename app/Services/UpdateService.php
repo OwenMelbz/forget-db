@@ -15,7 +15,7 @@ class UpdateService
     /**
      * Which user owns the repo to download the updates from.
      */
-    public const GITHUB_USER = 'OwenMelbz';
+    public const GITHUB_USER = 'kissg1988';
 
     /**
      * The name of the repo to download updates from.
