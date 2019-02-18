@@ -64,9 +64,9 @@ Recently we introduced the ability to add modifiers to your column definitions, 
 
 # Usage
 
-Once you have your config complete you can run `forget-db forget ./path/to/config.yml`. The wizard will ask for your connection details, and then will start the cleanse. If you specify database connection parameters in file named `.env` placed in the working directory (which should be the same directory where the `forget-db` binary is stored), those values are automatically used by the code. See `.env.example` to learn more about the settings that can be configured this way. Note that in interactive mode, the environment being used at runtime (as specified using the `--env` switch) affects the defaults. In non-interactive mode, all yes/no questions default to yes, regardless of the environment setting. To run in non-interactive mode, use the `-n` switch (useful for scripted runs).
+Once you have your config complete you can run `forget-db forget ./path/to/config.yml`. The wizard will ask for your connection details, and then will start the cleanse. If you specify database connection parameters in file named `.env` placed in the working directory, those values are automatically used by the code. See `.env.example` to learn more about the settings that can be configured this way. Note that in interactive mode, the environment being used at runtime (as specified using the `--env` switch) affects the defaults. In non-interactive mode, all yes/no questions default to yes, regardless of the environment setting. To run in non-interactive mode, use the `-n` switch (useful for scripted runs).
 
-After the command is completed you'll get some output about the success of the operation (with a detailed error message as appropriate). The code returns `0` on success and `1` on failure.
+After the command is completed you'll get some output about the success of the operation (with a detailed error message as appropriate). The code returns `0` exit code on success and `1` on failure.
 
 ## Dry-run
 
