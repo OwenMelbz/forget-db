@@ -48,7 +48,7 @@ Each top level item in the config file is a database table e.g `table_one`
 
 The first **required** property is `key` this is very important as it defines which column is used for the update query and most likely needs to be unique.
 
-The second **required** property is `columns` this is simply an array of column names, with their values set to Faker methods, you can get a full list of generators [Faker Generators here](https://github.com/fzaninotto/Faker) - most are easy to remember such as `name, email, company` etc. You can also used parametrized faker formatters like `regexify`.
+The second **required** property is `columns` this is simply an array of column names, with their values set to Faker methods, you can get a full list of generators [Faker Generators here](https://github.com/fzaninotto/Faker) - most are easy to remember such as `name, email, company` etc. You can also use parametrized formatters like `regexify`.
 
 The first **optional** property is `conditions` this should be an array of sql clauses if you need to restrict usage, e.g if you only need user_id 1 to be forgotten, then you can add `where user_id = 1`. You should be able to have multiple conditions, these get passed into Laravels' `whereRaw` method, so check out those documents if you need more advance queries.
 
