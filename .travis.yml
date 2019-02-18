@@ -13,6 +13,6 @@ script: vendor/bin/phpunit
 notifications:
   email:
     recipients:
-      - owenmelbz@gmail.com
+      - mail.gery@gmail.com
     on_success: never
     on_failure: always
