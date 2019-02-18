@@ -86,8 +86,6 @@ We do not have a full dry-run system, however you can preview the query that sel
 +----+-------------------------+------------------+
 ```
 
-Note that for large datasets, dry-running might crash depending on resource limits set in your local php environment. In interactive mode, the code asks whether you want to go on or not if more than 50 records are being fetched.
-
 Limitations for dry-runs:
 
 - It won't give you what the data will look like AFTER you run `forget`
@@ -100,3 +98,4 @@ Limitations for dry-runs:
 - There is no full dry-run support, I recommend to test this on a temporary database first or test your conditions using the `--dry` arg
 - The system that is running the tool must have a connection to the database server (firewall rules and ACLs might need to be set accordingly).
 - Due to trying to keep optimial server compatibility, updates are not done in bulk, but are done one at a time, so make sure you're aware of any row/table locking on your server.
+- For large datasets, dry-running might crash depending on resource limits set in your local php environment. In interactive mode, the code asks whether you want to go on or not if more than 50 records are to be fetched.
