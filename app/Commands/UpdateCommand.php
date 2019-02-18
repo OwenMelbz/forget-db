@@ -65,7 +65,7 @@ class UpdateCommand extends Command
         $this->line('');
         $this->line('Previous version has been backed up as ' . $updatePath . '.backup' );
         $this->line('');
-        $this->warn('Successfully updated to version ' . $newVersion );
+        $this->message('Successfully updated to version ' . $newVersion );
         exit;
     }
 

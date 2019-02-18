@@ -138,7 +138,7 @@ class UtilityService
      */
     public static function message(string $string): string
     {
-        return '🧠  forget-db :: ' . $string; // Boop.
+        return '*** forget-db --> ' . $string; // Boop.
     }
 
     /**
