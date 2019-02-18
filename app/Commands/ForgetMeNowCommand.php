@@ -93,9 +93,15 @@ class ForgetMeNowCommand extends Command
             exit(1);
         }
 
-        $this->notify('Operation completed', 'Data has been successfully wiped from the database.');
+        if ($this->option('dry'))
+            $this->notify('Operation completed', 'Dataset successfully fetched!');
+        else
+            $this->notify('Operation completed', 'Data successfully erased from database!');
         $this->line('');
-        $this->message('Data has been successfully wiped from the database.');
+        if ($this->option('dry'))
+            $this->message('Dataset successfully fetched!');
+        else
+            $this->message('Data successfully erased from database!');
     }
 
     /**
