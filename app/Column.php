@@ -55,18 +55,22 @@ class Column
         if ($paramStart = strpos($this->replacementMethod, '(')) {
             $paramEnd = strpos($this->replacementMethod, ')');
             $formatterName = substr($this->replacementMethod, 0, $paramStart);
-            $formatterArgs = trim(substr($this->replacementMethod, $paramStart + 1, $paramEnd - $paramStart - 1), '\'"');
+            $formatterArgs = substr($this->replacementMethod, $paramStart + 1, $paramEnd - $paramStart - 1);
+            $formatterArgs = explode(',', $formatterArgs);
+            foreach($formatterArgs as &$arg) {
+                $arg = trim($arg, "\"' ");
+            }
         }
 
         if ($this->unique) {
             if (isset($formatterName, $formatterArgs))
-                return app('faker')->unique()->format($formatterName, explode(',', $formatterArgs));
+                return app('faker')->unique()->format($formatterName, $formatterArgs);
             else
                 return app('faker')->unique()->format($this->replacementMethod);
         }
 
         if (isset($formatterName, $formatterArgs))
-            return app('faker')->format($formatterName, explode(',', $formatterArgs));
+            return app('faker')->format($formatterName, $formatterArgs);
         else
             return app('faker')->format($this->replacementMethod);
     }
