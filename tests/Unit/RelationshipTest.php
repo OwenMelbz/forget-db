@@ -2,9 +2,9 @@
 
 namespace Tests\Unit;
 
-use App\Table;
 use Tests\TestCase;
 use App\Relationship;
+use DMS\PHPUnitExtensions\ArraySubset\Assert;
 
 class RelationshipTest extends TestCase
 {
@@ -46,7 +46,7 @@ class RelationshipTest extends TestCase
 
         $this->assertNotEmpty($params);
         $this->assertCount(4, $params);
-        $this->assertArraySubset([
+        Assert::assertArraySubset([
             'users', 'user_id', '=', 'address_id'
         ], $params);
     }

@@ -52,7 +52,7 @@ class UtilityTest extends TestCase
         $message = UtilityService::message('hello');
 
         $this->assertStringEndsWith('hello', $message);
-        $this->assertContains('forget-db', $message);
+        $this->assertStringContainsString('forget-db', $message);
     }
 
     public function test_i_can_use_the_ordinal_sort_of()

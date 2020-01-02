@@ -17,7 +17,7 @@ class ForgetDbTest extends TestCase
         $this->setupTestDB();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->deleteTestDB();

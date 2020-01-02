@@ -13,7 +13,7 @@ class ColumnTest extends TestCase
 
         $replacement = $column->generate();
 
-        $this->assertContains('@', $replacement);
+        $this->assertStringContainsString('@', $replacement);
     }
 
     public function test_i_can_get_the_column_name()

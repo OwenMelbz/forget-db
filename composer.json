@@ -24,9 +24,11 @@
         "laravel-zero/framework": "^6.0",
         "laravel/helpers": "^1.1",
         "php-http/guzzle6-adapter": "^1.1",
-        "symfony/yaml": "^4.0"
+        "symfony/yaml": "^4.0",
+        "ext-pdo": "*"
     },
     "require-dev": {
+        "dms/phpunit-arraysubset-asserts": "^0.1.0",
         "phpunit/phpunit": "^8.2",
         "squizlabs/php_codesniffer": "^3.2"
     },

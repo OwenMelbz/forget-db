@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use PDO;
+use Exception;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -37,6 +38,8 @@ class DatabaseService
         foreach ($options as $setting => $default) {
             config([('database.connections.default.' . $setting) => data_get($config, $setting, $default)]);
         }
+
+        config(['database.default' => 'default']);
     }
 
     /**
@@ -135,7 +138,7 @@ class DatabaseService
      * the provided connection details.
      *
      * @return PDO
-     * @throws \Exception
+     * @throws Exception
      */
     public function testConnection(): PDO
     {
