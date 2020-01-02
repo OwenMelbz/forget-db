@@ -52,8 +52,26 @@ class Column
      */
     public function generate(): string
     {
+        if ($paramStart = strpos($this->replacementMethod, '(')) {
+            $paramEnd = strpos($this->replacementMethod, ')');
+            $formatterName = substr($this->replacementMethod, 0, $paramStart);
+            $formatterArgs = substr($this->replacementMethod, $paramStart + 1, $paramEnd - $paramStart - 1);
+            $formatterArgs = explode(',', $formatterArgs);
+            foreach($formatterArgs as &$arg) {
+                $arg = trim($arg, "\"' ");
+            }
+        }
+
         if ($this->unique) {
+            if (isset($formatterName, $formatterArgs)) {
+                return app('faker')->unique()->format($formatterName, $formatterArgs);
+            }
+
             return app('faker')->unique()->format($this->replacementMethod);
+        }
+
+        if (isset($formatterName, $formatterArgs)) {
+            return app('faker')->format($formatterName, $formatterArgs);
         }
 
         return app('faker')->format($this->replacementMethod);

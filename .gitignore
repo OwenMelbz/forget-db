@@ -7,3 +7,4 @@ forgetdb.yml
 .env
 *.phar
 application.backup
+composer.lock
