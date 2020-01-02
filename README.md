@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/OwenMelbz/forget-db.svg?branch=master)](https://travis-ci.org/OwenMelbz/forget-db)
 
-A simple(ish) command line tool written in PHP 7.1 using Laravel Zero and Faker to help you anonymise/pseudonymise data within your database to support protecting either sensitive information, or peoples right to be forgotten with GDPR compliance.
+A simple(ish) command line tool written in PHP 7.4 using Laravel Zero and Faker to help you anonymise/pseudonymise data within your database to support protecting either sensitive information, or peoples right to be forgotten with GDPR compliance.
 
 The tool allows you to connect to either mysql, postgres, sqlite or sqlserver and replace defined information with random data to allow you to keep statistics/relationships/audit of actions etc.
 
