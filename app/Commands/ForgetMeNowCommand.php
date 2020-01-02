@@ -41,7 +41,7 @@ class ForgetMeNowCommand extends Command
         if (!$configPath || ($configPath && !file_exists($configPath))) {
             $this->notify('Whoops', 'Looks like something didn\'t go to plan...');
             $this->fail('Cannot find config at ' . $this->argument('config'));
-            exit(0);
+            exit(1);
         }
 
         try {
@@ -50,7 +50,7 @@ class ForgetMeNowCommand extends Command
         } catch (\Exception $e) {
             $this->notify('Whoops', 'Looks like something didn\'t go to plan...');
             $this->fail($e->getMessage());
-            exit(0);
+            exit(1);
         }
 
         $this->message(sprintf('%d %s configured to forget.', count($config), str_plural('table', count($config))));
@@ -72,7 +72,13 @@ class ForgetMeNowCommand extends Command
                 $this->notify('Whoops', '🐳 Get the fail whale out...');
                 $this->fail($e->getMessage());
                 $this->line('');
-                $this->fail('😒 let\'s try again shall we?');
+
+                if (!$this->option('no-interaction')) {
+                    $this->fail('Could not connect to database, starting over...');
+                } else {
+                    $this->fail('Could not connect to database!');
+                    exit(1);
+                }
             }
         }
 
@@ -81,7 +87,7 @@ class ForgetMeNowCommand extends Command
         if (!$this->confirm('Are you ready to start? This is your last chance to bail, you can always try out --dry first! 💦', !config('app.production'))) {
             $this->notify('Whoops', 'Bailing! 💦💦💦');
             $this->fail('Bailing! 💦💦💦');
-            exit(0);
+            exit(1);
         }
 
         try {
@@ -89,7 +95,7 @@ class ForgetMeNowCommand extends Command
         } catch (\Exception $e) {
             $this->notify('Whoops', 'Looks like something didn\'t go to plan...');
             $this->fail($e->getMessage());
-            exit(0);
+            exit(1);
         }
 
         $this->notify('Who are you again?', 'We seem to have forgotten everything');
@@ -132,7 +138,9 @@ class ForgetMeNowCommand extends Command
 
         $driver = $this->choice('Which database driver do you need?', $driverList, 0);
 
-        $this->message('Please provide us your configuration options for ' . $driver);
+        if (!$this->option('no-interaction')) {
+            $this->message('Please provide configuration options for ' . $driver);
+        }
 
         switch ($driver) {
             case 'pgsql':
@@ -154,10 +162,8 @@ class ForgetMeNowCommand extends Command
 
         foreach ($options as $option => $default) {
             if ($option == 'driver') {
-                continue;
-            }
-
-            if ($option === 'password') {
+                $usersConfiguration[$option] = $options[$option];
+            } elseif ($option === 'password') {
                 $usersConfiguration[$option] = $this->secret('Database:: ' . $option, $default);
 
                 if (is_null($usersConfiguration[$option]) && $envPass = EnvService::get('DB_PASSWORD', null)) {
@@ -175,7 +181,7 @@ class ForgetMeNowCommand extends Command
 
         $this->table(['option', 'value'], $confirmTable);
 
-        while (!$confirmed = $this->confirm('Do the above settings look correct?', !config('app.production'))) {
+        while (!$confirmed = $this->confirm('Do the above settings look correct?', $this->option('no-interaction') ? true : !config('app.production'))) {
             return $this->getDatabaseConfig();
         }
 

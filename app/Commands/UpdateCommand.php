@@ -39,7 +39,7 @@ class UpdateCommand extends Command
 
         if (!$updater->shouldUpdate()) {
             $this->fail('You should only be updating the self contained .phar version!');
-            exit(0);
+            exit(1);
         }
 
         if (!$updateAvailable = $updater->searchForUpdates()) {
@@ -65,7 +65,7 @@ class UpdateCommand extends Command
         } catch (Exception $e) {
             $this->notify('Whoops', 'Looks like something didn\'t go to plan...');
             $this->fail($e->getMessage());
-            exit(0);
+            exit(1);
         }
 
         $this->line('');
