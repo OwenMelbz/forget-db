@@ -9,3 +9,4 @@ forgetdb.yml
 *.phar
 application.backup
 composer.lock
+.phpunit.result.cache
