@@ -56,7 +56,7 @@ The second **optional** property is `joins` this can be a string or array of joi
 
 ## Modifiers
 
-Recently we introduced the ability to add modifiers to your column definitions, currently there is only one. To use a modifer just prefix the faker method with `modifer:` to create something like `modifer:email_address`
+Recently we introduced the ability to add modifiers to your column definitions, currently there is only one. To use a modifier just prefix the faker method with `modifier:` to create something like `modifier:email_address`
 
  Name        | Description           |
 |:------------- |:-------------|
