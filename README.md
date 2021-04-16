@@ -19,7 +19,7 @@ composer global require -W owenmelbz/forget-db
 Alternatively you can install this with curl:
 
 ```sh
-curl -L https://github.com/OwenMelbz/forget-db/raw/master/builds/application --output forget-db
+curl -L https://github.com/OwenMelbz/forget-db/raw/master/builds/forget-db
 chmod +x forget-db
 mv ./forget-db /usr/local/bin/forget-db
 forget-db update # optional - but will make sure your binary is up to date
