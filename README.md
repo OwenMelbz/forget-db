@@ -10,7 +10,13 @@ It uses a simple yaml configuration file to define the conditions for overwritin
 
 # Installation
 
-I would recommend installing this globally on your system with
+I would recommend installing this globally on your system:
+
+```sh
+composer global require -W owenmelbz/forget-db
+```
+
+Alternatively you can install this with curl:
 
 ```sh
 curl -L https://github.com/OwenMelbz/forget-db/raw/master/builds/application --output forget-db
