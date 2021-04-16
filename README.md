@@ -62,7 +62,7 @@ The second **optional** property is `joins` this can be a string or array of joi
 
 ## Modifiers
 
-Recently we introduced the ability to add modifiers to your column definitions, currently there is only one. To use a modifer just prefix the faker method with `modifer:` to create something like `modifer:email_address`
+Recently we introduced the ability to add modifiers to your column definitions, currently there is only one. To use a modifier just prefix the faker method with `modifier:` to create something like `modifier:email_address`
 
  Name        | Description           |
 |:------------- |:-------------|
@@ -103,5 +103,5 @@ Limitations for dry-runs:
 - Due to syntax and Laravel requirements running the code requires PHP 7.1+
 - There is no full dry-run support, I recommend to test this on a temporary database first or test your conditions using the `--dry` arg
 - The system that is running the tool must have a connection to the database server (firewall rules and ACLs might need to be set accordingly).
-- Due to trying to keep optimial server compatibility, updates are not done in bulk, but are done one at a time, so make sure you're aware of any row/table locking on your server.
+- Due to trying to keep optimal server compatibility, updates are not done in bulk, but are done one at a time, so make sure you're aware of any row/table locking on your server.
 - For large datasets, dry-running might crash depending on resource limits set in your local php environment. In interactive mode, the code asks whether you want to go on or not if more than 50 records are to be fetched.
